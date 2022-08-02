@@ -1,26 +1,17 @@
-const express = require('express');
-const path = require("path");
-const http = require("http");
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-const app = express();
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
-const REACT_PATH = '../frontend-react/'
-
-app.use(express.static(path.join(__dirname, REACT_PATH + 'build')))
-
-function setupHandlers(app) {
-    app.set()
-}
-
-app.get('/', function (req, res) { // '/' 위치에 'get'요청을 받는 경우,
-    res.sendFile(path.join(__dirname, REACT_PATH + 'build/index.html'))
-});
-
-app.get('*', function (req, res) { // '/' 위치에 'get'요청을 받는 경우,
-    res.sendFile(path.join(__dirname, REACT_PATH + 'build/index.html'))
-});
-
-const port = process.env.PORT;
-app.listen(port, function () { // port변수를 이용하여 3000번 포트에 node.js 서버를 연결합니다.
-    console.log('server on! http://localhost:' + port); //서버가 실행되면 콘솔창에 표시될 메세지입니다.
-});
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
