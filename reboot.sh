@@ -1,0 +1,1 @@
+sudo docker-compose down --remove-orphans && sudo docker-compose up --build --no-color 2>&1 | tee run.log
