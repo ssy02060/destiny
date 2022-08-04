@@ -1,0 +1,12 @@
+{
+    "reviewlist": [
+        {
+            "user": "Eukgun",
+            "movie": "Harry Potter",
+            "review": {
+                "comment": "Hmmm",
+                "rate": 3
+            }
+        }
+    ]
+}

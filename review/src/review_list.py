@@ -3,11 +3,14 @@ from pymongo import MongoClient
 import os
 import datetime
 
-post = {"author": "Mike",
-        "text": "My first blog post!",
-        "tags": ["mongodb", "python", "pymongo"],
-        "date": datetime.datetime.utcnow()
-        }
+post = {
+    "user": "Eukgun",
+    "movie": "Harry Potter",
+    "review": {
+                "comment": "Hmmm",
+                "rate": 3
+          }
+          }
 
 app = Flask("api_test")
 
@@ -17,7 +20,8 @@ DBHOST = os.environ['DBHOST']
 @app.get('/review')
 def review_list():
     return 'Review'
-'''    
+    '''
+@app.POST('/review')
 def withUser(userid):
     client = MongoClient(host=DBHOST, port=27017)
 
@@ -27,6 +31,5 @@ def withUser(userid):
 
     return 'created'
 #def withMoviCd(movieCd):
-
 if __name__ == '__main__':
     app.run('0.0.0.0', port=PORT, debug=True)
