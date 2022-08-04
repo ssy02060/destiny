@@ -7,6 +7,4 @@ COPY ./requirements.txt ./requirements.txt
 RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-EXPOSE 80
-
-CMD python3 ./src/app.py
+CMD python3 ./src/review_list.py

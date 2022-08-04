@@ -105,4 +105,4 @@ dist
 docker-compose.yml
 docker
 my-type/container
-my-type/model
+data
