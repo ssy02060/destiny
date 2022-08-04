@@ -23,5 +23,13 @@ def create_database():
     posts = db.review
     post_id = posts.insert_one(post).inserted_id
     return 'created'
+
+@app.route('/create')
+def input_review():
+    
+    review_id = reviews.insert_one(review).inserted_id
+    print(review_id, file=sys.stderr)
+    return 'created'
+    
 if __name__ == '__main__':
     app.run('0.0.0.0', port=PORT, debug=True)

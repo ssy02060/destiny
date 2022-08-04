@@ -7,15 +7,6 @@ import sys
 import json
 import requests
 
-review = {
-    "user": "Eukgun",
-    "movie": "Harry Potter",
-    "review": {
-                "comment": "Hmmm",
-                "rate": 3
-          }
-    }
-
 app = Flask("review")
 PORT = os.environ['PORT']
 DBHOST = os.environ['DBHOST']
@@ -53,14 +44,6 @@ def read_review():
 
     return "review"
 
-
-@app.route('/create')
-def input_review():
-    
-    review_id = reviews.insert_one(review).inserted_id
-    print(review_id, file=sys.stderr)
-    return 'created'
-    
 if __name__ == '__main__':
     app.debug = True
     app.run('0.0.0.0', port=PORT, debug=True)
