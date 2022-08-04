@@ -1,0 +1,23 @@
+{
+    "reviewlist": [
+        {
+            "user": "Eukgun",
+            "movie": "Harry Potter",
+            "review": {
+                "comment": "Hmmm",
+                "rate": 3
+            }
+        }
+    ]
+}
+
+curl -d '"reviewlist": {"user": "Eukgun","movie": "Harry Potter","review": { "comment": "Hmmm", "rate": 3 }}' \
+-H "Content-Type: application/json" \
+-X POST http://localhost:4001/review
+
+
+curl -d '"reviewlist":{}' \
+-H "Content-Type: application/json" \
+-X POST http://localhost:4001/review
+
+
