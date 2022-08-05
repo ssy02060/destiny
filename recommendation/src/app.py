@@ -15,19 +15,19 @@ def genre_recommend():
     return 'genre_recommend'
 
 @app.route('/directors')
-def genre_recommend():
+def directors_recommend():
     return 'directors_recommend'
 
 @app.route('/userid')
-def genre_recommend():
+def userid_recommend():
     return 'userid_recommend'
 
 @app.route('/actors')
-def genre_recommend():
+def actors_recommend():
     return 'actors_recommend'
 
 @app.route('/prdtYear')
-def genre_recommend():
+def prdtYear_recommend():
     return 'prdtYear_recommend'
 
 
