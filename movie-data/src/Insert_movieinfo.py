@@ -12,10 +12,6 @@ url = 'https://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInf
 client = MongoClient(host='192.168.19.128', port=27017)
 mydb = client['movie_data']
 movieCd = []
-data = {
-    'author' : 'jun'
-}
-# mydb.movie.details.insert_one(data)
 
 for d in mydb['movie.information'].find():
     a = d['movieCd']
