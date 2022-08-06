@@ -1,14 +1,20 @@
-const mongodb = require("mongodb");
+const express = require('express');
+const path = require("path");
+const http = require("http");
+const bodyParser = require("body-parser")
 
-function connectDb(dbHost, dbName) {
-    return mongodb.MongoClient.connect(dbHost, { useUnifiedTopology: true })
-        .then(client => {
-            const db = client.db(dbName);
-            return {                // Return an object that represents the database connection.
-                db: db,             // To access the database...
-                close: () => {      // and later close the connection to it.
-                    return client.close();
-                },
-            };
-        });
-}
+app = express();
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
+const PORT = process.env.PORT;
+const DBHOST = process.env.DBHOST;
+
+app.get('/', function (req, res) {
+    res.send("hello");
+})
+
+app.listen(PORT, function () {
+    console.log('server on! ' + PORT);
+});
+
