@@ -1,0 +1,35 @@
+{
+    [
+        {
+            "contents" : "범죄",
+            "search" : { 
+                "movieNm" : ["범죄도시", "범죄도시2"]
+            }
+        },
+        {
+            "actor" : "현빈",
+            "search" : { 
+                "movieNm" : ["꾼", "교섭"]
+            }
+        },
+        {
+            "movieNm" : "범죄",
+            "search" : { 
+                "movieNm" : ["범죄도시", "범죄도시2",  "범죄와의 전쟁 : 나쁜놈들 전성시대"]
+            }
+        },
+        {
+            "genreNm" : "액션",
+            "search" : { 
+                "movieNm" : ["백두산", "아저씨"]
+            }
+        },
+        {
+            "director" : "봉준호",
+            "search" : { 
+                "movieNm" : ["기생충", "괴물"]
+            }
+        }
+       
+    ]
+}

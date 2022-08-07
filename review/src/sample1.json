@@ -20,4 +20,4 @@ curl -d '"reviewlist":{}' \
 -H "Content-Type: application/json" \
 -X POST http://localhost:4001/review
 
-
+curl -X DELETE "http://localhost:4001/review?userId=Seo&movieCd=2221"
