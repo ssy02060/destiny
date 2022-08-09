@@ -1,13 +1,7 @@
-from flask import Flask
+from flask import Flask, request
 from pymongo import MongoClient
 import os
-import datetime
 
-post = {"author": "Mike",
-        "text": "My first blog post!",
-        "tags": ["mongodb", "python", "pymongo"],
-        "date": datetime.datetime.utcnow()
-        }
 
 app = Flask("api_test")
 
@@ -15,64 +9,30 @@ PORT = os.environ['PORT']
 DBHOST = os.environ['DBHOST']
 
 @app.route('/')
-def hello():
-    return 'Movie_data'
+def root():
+    parameter_dict = request.args.to_dict()
+    if len(parameter_dict) == 0:
+        return 'No parameter'
 
-@app.route('/create_collection')
-def create_collection():
+    parameters = ''
+    for key in parameter_dict.keys():
+        parameters += 'key: {}, value: {}\n'.format(key, request.args[key])
+    return 'Movie API'
+
+@app.route('/movie')
+def year_find_movie():
     client = MongoClient(host=DBHOST, port=27017)
-    db = client['movie_data']
-    posts = db.movie_data
-    post_id = posts.insert_one(post).inserted_id
-    print(post_id)
-    return 'created'
+    mydb = client['movie_data']
+
+    parameter_dict = request.args.to_dict()
+    if len(parameter_dict) == 0:
+        return 'No parameter'
+
+    parameters = ''
+    for key in parameter_dict.keys():
+        parameters += 'key: {}, value: {}\n'.format(key, request.args[key])
+    
+    return mydb.movieInfo.delete_many({"openYear":request.args[key]})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=PORT, debug=True)
-
-# from flask import Flask
-# # from gridfs import Database
-# from pymongo import MongoClient
-# import os
-# import datetime
-# import pprint
-
-# post = {"id": "Mike",
-#         "email": "My first blog post!",
-#         "tags": ["mongodb", "python", "pymongo"],
-#         "date": datetime.datetime.utcnow()
-#         }
-
-# app = Flask("api_test")
-
-# PORT = os.environ['PORT']
-# DBHOST = os.environ['DBHOST']
-
-# @ app.route('/')
-# def hello():
-#     return 'movie_data'
-# post_id = ''
-
-# @ app.route('/create-collection')
-# def create_database():
-#     client = MongoClient(host=DBHOST, port=27017)
-#     # 각자 서비스명
-#     db = client['movie_data']
-#     movie_data = db['movie_data']
-#     post_id = movie_data.insert_one(post).inserted_id
-#     print(post_id)
-#     return 'inserted'
-
-# @ app.route('/query')
-# def query():
-#     client = MongoClient(host=DBHOST, port=27017)
-#     # 각자 서비스명
-#     db = client['movie_data']
-#     posts = db.posts
-#     pprint.pprint(posts.find_one({"_id": post_id}))
-#     item = posts.find_one({"_id": post_id})
-#     print(post_id)
-#     return 'item' + post_id
-
-# if __name__ == '__main__':
-#     app.run('0.0.0.0', port=PORT, debug=True)
