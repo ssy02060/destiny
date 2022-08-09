@@ -2,6 +2,7 @@ from contextlib import nullcontext
 from enum import unique
 from flask import Flask, request
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 import os
 import sys
 import json
@@ -46,7 +47,7 @@ db.reviews.create_index(
 # json-POST
 @app.route('/send_post', methods=['GET'])
 def send_post():
-    review_list =  {"userId": "Seo","movieCd": "2222","review": { "comment": "Cool", "rate": 2 }}
+    review_list =  {"userId": "Eukgun","movieCd": "2222","review": { "comment": "Cool", "rate": 2 }}
     res = requests.post("http://192.168.5.135:4001/review", data=json.dumps(review_list))
     return res.text
 
@@ -57,24 +58,47 @@ def read_review():
     a = request.args.get('userId')
     print(type(a),file=sys.stderr)
     if request.method == 'GET':
-        review_list = []
-        for review in reviews.find():
-            review_list.append(review)
-        return str(review_list)
-    elif request.method == 'POST':
+        parameter_dict = request.args.to_dict()
+        if len(parameter_dict) == 0:
+            review_list = []
+            for review in reviews.find():
+                review_list.append(review)
+            print(review_list,file=sys.stderr)
+            return str(review_list)
+        else:
+            parameters = ''
+            parameter_dict = request.args.to_dict()
+            for key in parameter_dict.keys():
+                parameters += 'key: {}, value: {}\n'.format(key, request.args[key])
+            if key == "userId": #한 유저의 리뷰 목록
+                review_list = []
+                for review in reviews.find({"userId":request.args[key]}):
+                    review_list.append(review)
+                return str(review_list)     # 향후 수정
+            elif key == "movieCd": #한 영화의 리뷰 목록
+                review_list = []
+                for review in reviews.find({"movieCd":request.args[key]}):
+                    review_list.append(review)
+                return str(review_list)     # 향후 수정
+            elif key == "_id": #리뷰 개별보기
+                review_list = []
+                try:
+                    for review in reviews.find({"_id":ObjectId(request.args[key])}):
+                        review_list.append(review)
+                    return str(review_list)
+                except:
+                    return "존재하지 않는 리뷰입니다."   #추후 업데이트 필요                
+    elif request.method == 'POST': #리뷰 등록
         params = json.loads(request.get_data(), encoding='utf-8')
         print(params, file=sys.stderr)
         if len(params) == 0:
-            return 'No parameter'
-    # elif request.method == 'GET' & request.args.get('userId') >= 1:
-    #     print("Gooood", file=sys.stderr)
-    #     return "Gooood"
+            return 'No parameter' #추후 업데이트 필요
         try:
             review_id = reviews.insert_one(params).inserted_id
             params_str = ''
             for key in params.keys():
                 params_str += 'key: {}, value: {}<br>'.format(key, params[key]) 
-            return params_str    
+            return params_str    # 추후 업데이트 필요
         except:
             return "리뷰가 중복되거나 올바르지 않습니다."   #추후 업데이트 필요
     return "review"
