@@ -46,7 +46,7 @@ db.reviews.create_index(
 # json-POST
 @app.route('/send_post', methods=['GET'])
 def send_post():
-    review_list =  {"userId": "Seo","movieCd": "2222","review": { "comment": "Cool", "rate": 2 }}
+    review_list =  {"userId": "Eukgun","movieCd": "2222","review": { "comment": "Cool", "rate": 2 }}
     res = requests.post("http://192.168.5.135:4001/review", data=json.dumps(review_list))
     return res.text
 
@@ -57,24 +57,41 @@ def read_review():
     a = request.args.get('userId')
     print(type(a),file=sys.stderr)
     if request.method == 'GET':
-        review_list = []
-        for review in reviews.find():
-            review_list.append(review)
-        return str(review_list)
+        parameter_dict = request.args.to_dict()
+        print(parameter_dict, file=sys.stderr)
+        print(len(parameter_dict), file=sys.stderr)
+        if len(parameter_dict) == 0:
+            review_list = []
+            for review in reviews.find():
+                review_list.append(review)
+            return str(review_list)
+        else:
+            parameters = ''
+            parameter_dict = request.args.to_dict()
+            for key in parameter_dict.keys():
+                parameters += 'key: {}, value: {}\n'.format(key, request.args[key])
+            print(key, file=sys.stderr)
+            if key == "userId":
+                review_list = []
+                for review in reviews.find({"userId":request.args.get('userId')}):
+                    review_list.append(review)
+                return str(review_list)     # 향후 수정
+            elif key == "movieCd":
+                review_list = []
+                for review in reviews.find({"movieCd":request.args.get('movieCd')}):
+                    review_list.append(review)
+                return str(review_list)     # 향후 수정
     elif request.method == 'POST':
         params = json.loads(request.get_data(), encoding='utf-8')
         print(params, file=sys.stderr)
         if len(params) == 0:
             return 'No parameter'
-    # elif request.method == 'GET' & request.args.get('userId') >= 1:
-    #     print("Gooood", file=sys.stderr)
-    #     return "Gooood"
         try:
             review_id = reviews.insert_one(params).inserted_id
             params_str = ''
             for key in params.keys():
                 params_str += 'key: {}, value: {}<br>'.format(key, params[key]) 
-            return params_str    
+            return params_str    # 추후 업데이트 필요
         except:
             return "리뷰가 중복되거나 올바르지 않습니다."   #추후 업데이트 필요
     return "review"
