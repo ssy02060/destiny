@@ -293,9 +293,4 @@ def crawling(s, e):
  
 if __name__ == "__main__":
     p1 = Process(target=crawling, args=(2023, 1990))
-    # p2 = Process(target=crawling, args=(2011, 2001))
-    # p3 = Process(target=crawling, args=(2000, 1990))
- 
     p1.start()
-    # p2.start()
-    # p3.start()
