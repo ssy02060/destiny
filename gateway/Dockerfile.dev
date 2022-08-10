@@ -1,9 +1,8 @@
 FROM node:lts-alpine3.16
 
 WORKDIR /usr/src/app
-COPY ./api/package*.json ./api/
-COPY ./api/src ./api/src
-WORKDIR /usr/src/app/api
+COPY ./package*.json ./
+COPY ./src ./src
 
 CMD npm config set cache-min 9999999 && \
     npm install && \
