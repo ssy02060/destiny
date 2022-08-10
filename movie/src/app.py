@@ -22,8 +22,26 @@ def find_movie():
         return 'No parameter'
     else:
         for key in parameter_dict.keys():
+            # keyword로 전체 검색
+            if key == 'keyword':
+                results = mydb.movieInfo.find(
+                    {'$or':[
+                        {'openYear': parameter_dict[key]},
+                        {'movieCd': parameter_dict[key]},
+                        {'movieNm': parameter_dict[key]},
+                        {'openDt': parameter_dict[key]},
+                        {'showTm': parameter_dict[key]},
+                        {'nationNm': parameter_dict[key]},
+                        {'directors': parameter_dict[key]},
+                        {'actors': {'$regex':parameter_dict[key]}},
+                        {'watchGradeNm': parameter_dict[key]},
+                        {'genre': {'$regex':parameter_dict[key]}},
+                        {'rate': parameter_dict[key]},
+                        {'story': parameter_dict[key]} 
+                        ]}, {"_id":0})
             # key : 영화코드, 개봉년도, 감독, 배우 등으로 검색
-            results = mydb.movieInfo.find({key:{'$regex':parameter_dict[key]}}, {"_id":0})
+            else:
+                results = mydb.movieInfo.find({key:{'$regex':parameter_dict[key]}}, {"_id":0})
             dic = []
         for result in results:
             # 조건에 맞는 영화 목록 저장
