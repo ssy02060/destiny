@@ -69,7 +69,6 @@ def find_movie():
         keys = []
         values = []
         # 파라미터로 openYear 전달됐는지 검증 변수
-        global togle
         togle = 0
         for key in parameter_dict.keys():
             # 년도 입력 됐을 때 str -> int로 바꿔주기
