@@ -13,6 +13,7 @@ router.get('/', (req, res) => {
 
 // Find One by userid
 router.get('/:userid', (req, res) => {
+  console.log(req.params.userid)
   MyType.findOneByuserid(req.params.userid)
     .then((mytype) => {
       if (!mytype) return res.status(404).send({ err: 'mytype not found' });
@@ -31,8 +32,8 @@ router.post('/', (req, res) => {
 
 // Update by userid
 router.put('/:userid', (req, res) => {
+  console.log(req.body.userid)
   MyType.updateByuserid(req.params.userid, req.body)
-
     .then(mytype => res.send(mytype))
     .catch(err => res.status(500).send(err));
     //.catch(err =>  console.log(err))
@@ -55,18 +56,6 @@ router.put('/:userid', (req, res) => {
 //       })
 //     .catch(err => res.status(500).send(err));
 // });
-
-
-  // await db.mytypes.update
-  //   (qurey,
-  //   {userid:req.body.userid,
-  //    genres: req.body.tag.genres,
-  //    directors: req.body.tag.directors,
-  //    movies: req.body.tag.movies,
-  //    actors: req.body.tag.actors
-  //   }, 
-  //   {upsert: true})
-  
 
 // Delete by userid
 router.delete('/:userid', (req, res) => {
