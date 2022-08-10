@@ -39,20 +39,9 @@ def find_movie():
                 if keys[0] == 'openYear':
                     results = mydb.movieInfo.find({{keys[0]:int(values[0])}, {keys[1]:values[1]}}, {"_id":0})
                 results = mydb.movieInfo.find({{keys[0]:values[0]}, {keys[1]:int(values[1])}}, {"_id":0})
-            results = mydb.movieInfo.find({{keys[0]:values[0]}, {keys[1]:values[1]}}, {"_id":0})
-        
+            results = mydb.movieInfo.find({{keys[0]:values[0]}, {keys[1]:values[1]}}, {"_id":0}) 
         # elif len(keys) == 3:
-
-    #     if key == 'openYear':
-    #         results = mydb.movieInfo.find({key:parameter_dict[key]}, {"_id":0})
-    #     else:
-    #         results = mydb.movieInfo.find({key:{'$regex':parameter_dict[key]}}, {"_id":0})
         dic = []
-            # if key == 'openYear':
-            #     results = mydb.movieInfo.find({key:int(parameter_dict[key])}, {"_id":0})
-            # else:
-            #     results = mydb.movieInfo.find({key:{'$regex':parameter_dict[key]}}, {"_id":0})
-            # dic = []
         for result in results:
             # 조건에 맞는 영화 목록 저장
             dic.append(result)
