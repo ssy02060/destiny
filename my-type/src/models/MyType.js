@@ -2,17 +2,19 @@ const mongoose = require('mongoose');
 
 // Define Schemes
 const mytypeSchema = new mongoose.Schema({
-  userid: { type: Number, required: true},
+  userid: {type: String},
   tag: { 
-    genres: {type: String},
-    directors: {type: String},
-    movies: {type: String},
-    actors: {type: String}
-  },
-},
-{
-  timestamps: true
-});
+    genres: {type: String , required: true },
+    directors: {type: String , required: true },
+    movies: {type: String , required: true },
+    actors: {type: String , required: true }
+  } ,
+ },
+ {
+   timestamps: true
+ },
+ { collection: 'MyType'}
+);
 
 
 // Create new MyType document
