@@ -17,15 +17,19 @@ def find_movie():
     client = MongoClient(host=DBHOST, port=27017)
     mydb = client['movie_data']
     parameter_dict = request.args.to_dict()
+    # 입력된 파라미터가 없을 때
     if len(parameter_dict) == 0:
         return 'No parameter'
     else:
         for key in parameter_dict.keys():
+            # key : 영화코드, 개봉년도, 감독, 배우 등으로 검색
             results = mydb.movieInfo.find({key:{'$regex':parameter_dict[key]}}, {"_id":0})
             dic = []
         for result in results:
+            # 조건에 맞는 영화 목록 저장
             dic.append(result)
-            print(result, file=sys.stderr)
+            print(dic, file=sys.stderr)
+    # 리스트를 json 형식으로 변환하여 반환
     return jsonify(str(dic))
 
 if __name__ == '__main__':
