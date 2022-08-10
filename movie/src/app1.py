@@ -25,6 +25,7 @@ def find_movie():
         values = []
         for key in parameter_dict.keys():
             # key : 영화코드, 개봉년도, 감독, 배우 등으로 검색
+            # parameter 저장
             keys.append(key)
             values.append(parameter_dict[key])
             print(type(keys), file=sys.stderr)
