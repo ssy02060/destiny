@@ -47,8 +47,15 @@ db.reviews.create_index(
 # json-POST
 @app.route('/send_post', methods=['GET'])
 def send_post():
-    review_list =  {"userId": "Eukgun","movieCd": "2222","review": { "comment": "Cool", "rate": 2 }}
+    review_list =  {"userId": "Eukgun","movieCd": "2221","review": { "comment":"Hmmmm", "rate":2}}
     res = requests.post("http://192.168.5.135:4001/review", data=json.dumps(review_list))
+    return res.text
+
+# json-UPDATE
+@app.route('/send_update', methods=['GET'])
+def send_update():
+    review_list =  {"userId": "Eukgun","movieCd": "2221","review": { "comment":"goood", "rate":5}}
+    res = requests.put("http://192.168.5.135:4001/review?_id=62f1a7c894a14052b20d96f9", data=json.dumps(review_list))
     return res.text
 
 # reading review and insert review
@@ -63,7 +70,6 @@ def read_review():
             review_list = []
             for review in reviews.find():
                 review_list.append(review)
-            print(review_list,file=sys.stderr)
             return str(review_list)
         else:
             parameters = ''
@@ -90,7 +96,6 @@ def read_review():
                     return "존재하지 않는 리뷰입니다."   #추후 업데이트 필요                
     elif request.method == 'POST': #리뷰 등록
         params = json.loads(request.get_data(), encoding='utf-8')
-        print(params, file=sys.stderr)
         if len(params) == 0:
             return 'No parameter' #추후 업데이트 필요
         try:
@@ -109,6 +114,22 @@ def delete_review():
     print(request.args.get('userId'),request.args.get('movieCd'), file=sys.stderr)
     reviews.delete_one({"userId":request.args.get('userId'),"movieCd":request.args.get('movieCd')})
     return "Delete Complete" #추후 업데이트 필요
+
+# review update
+@app.route('/review', methods=['PUT'])
+def update_review():
+    params = json.loads(request.get_data(), encoding='utf-8')
+    params_str = ''
+    for key in params.keys():
+        params_str += 'key: {}, value: {}\n'.format(key, params[key]) 
+    print(params_str, file=sys.stderr)
+
+    parameters = ''
+    parameter_dict = request.args.to_dict()
+    for key in parameter_dict.keys():
+        parameters += 'key: {}, value: {}\n'.format(key, request.args[key])
+    review_id = reviews.update_one({"_id":ObjectId(request.args['_id'])}, {"$set":{"review":params['review']}})
+    return params_str
 
 if __name__ == '__main__':
     app.debug = True
