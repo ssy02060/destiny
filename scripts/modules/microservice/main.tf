@@ -5,8 +5,9 @@ variable "dns_name" {
   default = ""
 }
 
-variable "repository_url" {}
-
+variable "username" {
+  default = "AWS"
+}
 
 variable "service_type" {
   default = "ClusterIP"
@@ -22,7 +23,57 @@ variable "env" {
 }
 
 locals {
-  image_tag = "${var.repository_url}/${var.service_name}:${var.app_version}"
+  image_tag = "${aws_ecr_repository.repo.repository_url}:${var.app_version}"
+}
+
+resource "aws_ecr_repository" "repo" {
+  name                 = var.service_name
+  image_tag_mutability = "MUTABLE"
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+resource "aws_ecr_repository_policy" "ecr_policy" {
+  repository = aws_ecr_repository.repo.name
+
+  policy = <<EOF
+{
+    "Version": "2008-10-17",
+    "Statement": [
+        {
+            "Sid": "adds full ecr access to the demo repository",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:BatchGetImage",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:PutImage",
+                "ecr:InitiateLayerUpload",
+                "ecr:UploadLayerPart",
+                "ecr:CompleteLayerUpload",
+                "ecr:DescribeRepositories",
+                "ecr:GetRepositoryPolicy",
+                "ecr:ListImages",
+                "ecr:DeleteRepository",
+                "ecr:BatchDeleteImage",
+                "ecr:SetRepositoryPolicy",
+                "ecr:DeleteRepositoryPolicy"
+            ]
+        }
+    ]
+}
+EOF
+}
+
+output "registry_id" {
+  description = "The account ID of the registry holding the repository."
+  value       = aws_ecr_repository.repo.registry_id
+}
+
+output "repository_url" {
+  description = "The URL of the repository."
+  value       = aws_ecr_repository.repo.repository_url
 }
 
 resource "null_resource" "docker_build" {
@@ -44,24 +95,23 @@ resource "null_resource" "null_for_ecr_get_login_password" {
   }
   provisioner "local-exec" {
     command = <<EOF
-      aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${var.repository_url}
+      aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${aws_ecr_repository.repo.repository_url}
     EOF
   }
-
 }
 
-# resource "null_resource" "docker_push" {
+resource "null_resource" "docker_push" {
 
-#   depends_on = [null_resource.null_for_ecr_get_login_password]
+  depends_on = [null_resource.null_for_docker_login]
 
-#   triggers = {
-#     always_run = timestamp()
-#   }
+  triggers = {
+    always_run = timestamp()
+  }
 
-#   provisioner "local-exec" {
-#     command = "docker push ${local.image_tag}"
-#   }
-# }
+  provisioner "local-exec" {
+    command = "docker push ${local.image_tag}"
+  }
+}
 
 # locals {
 #   dockercreds = {
