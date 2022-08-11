@@ -37,14 +37,14 @@ resource "aws_s3_bucket" "terraform-state" {
   }
 }
 
-# terraform {
-#   required_version = ">= 0.9.5"
-#   backend "s3" {
-#     bucket         = "dstny.terraform.state"
-#     key            = "test/terraform.tfstate"
-#     region         = var.region
-#     encrypt        = true
-#     dynamodb_table = "TerraformStateLock"
-#     acl            = "bucket-owner-full-control"
-#   }
-# }
+terraform {
+  required_version = ">= 0.9.5"
+  backend "s3" {
+    bucket         = "dstny.terraform.state"
+    key            = "test/terraform.tfstate"
+    region         = var.region
+    encrypt        = true
+    dynamodb_table = "TerraformStateLock"
+    acl            = "bucket-owner-full-control"
+  }
+}
