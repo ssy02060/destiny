@@ -116,8 +116,16 @@ def read_review():
 # review delete
 @app.route('/review', methods=['DELETE'])
 def delete_review():
-    reviews.delete_one({"userId":request.args.get('userId'),"movieCd":request.args.get('movieCd')})
-    return Response("Successfully deleted!", status=200, mimetype='application/json')
+    parameters = ''
+    parameter_dict = request.args.to_dict()
+    for key in parameter_dict.keys():
+        parameters += 'key: {}, value: {}\n'.format(key, request.args[key])
+        print(key,file=sys.stderr)
+        a=[]
+        a.append[key]
+    if key == a[0] & a[1]:
+        reviews.delete_one({"userId":request.args.get('userId'),"movieCd":request.args.get('movieCd')})
+        return Response("Successfully deleted!", status=200, mimetype='application/json')
 
 # review update
 @app.route('/review', methods=['PUT'])
