@@ -42,7 +42,7 @@ terraform {
   backend "s3" {
     bucket         = "dstny.terraform.state"
     key            = "test/terraform.tfstate"
-    region         = var.region
+    region         = "ap-northeast-2"
     encrypt        = true
     dynamodb_table = "TerraformStateLock"
     acl            = "bucket-owner-full-control"
