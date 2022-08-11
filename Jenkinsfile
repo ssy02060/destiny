@@ -9,6 +9,11 @@ pipeline {
                 git branch: 'main', credentialsId: 'Github', url: 'https://github.com/ssy02060/destiny'
             }
         }
+        stage('move to terraform directory'){
+            steps{
+                sh 'cd ./scripts'
+            }
+        }
         stage('terraform format check') {
             steps{
                 sh 'terraform fmt'
