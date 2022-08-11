@@ -1,8 +1,7 @@
 FROM node:lts-alpine3.16
 
 WORKDIR /usr/src/app
+COPY package*.json ./
 RUN npm install --only=production
-COPY ./api/package*.json ./api
-COPY ./api/src ./api/src
-
+COPY ./src ./src
 CMD npm start
