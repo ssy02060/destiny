@@ -29,11 +29,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          export VERSION=1
-          sh ./scripts/deploy.sh
       - name: Add profile credentials to ~/.aws/credentials
         run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }} 
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+      - name: Run a multi-line script
+        run: |
+          export VERSION=1
+          sh ./scripts/deploy.sh
+      
