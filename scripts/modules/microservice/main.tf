@@ -102,7 +102,7 @@ resource "null_resource" "null_for_ecr_get_login_password" {
 
 resource "null_resource" "docker_push" {
 
-  depends_on = [null_resource.null_for_docker_login]
+  depends_on = [null_resource.null_for_ecr_get_login_password]
 
   triggers = {
     always_run = timestamp()
