@@ -12,6 +12,13 @@ variable "app_name" {
   default = "destiny"
 }
 
+variable "aws_access_key_id" {
+
+}
+variable "aws_secret_access_key" {
+
+}
+
 variable "app_version" { # Can't be called version! That's a reserved word.
   default = "latest"
 }
