@@ -44,7 +44,7 @@ movies_df['keywords'] = movies_df['keywords'].apply(literal_eval)
 movies_df['genres'] = movies_df['genres'].apply(lambda x : [ dic['name'] for dic in x] )
 movies_df['keywords'] = movies_df['keywords'].apply(lambda x : [ dic['name'] for dic in x] )
 
-movies_df[['genres', 'keywords']][:1]
+print(movies_df[['genres', 'keywords']][:1])
 
 
 from sklearn.feature_extraction.text import CountVectorizer
