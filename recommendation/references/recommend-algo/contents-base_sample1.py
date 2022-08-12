@@ -117,4 +117,4 @@ def find_sim_movie(df, sim_matrix, title_name, top_n=10):
 
 similar_movies = find_sim_movie(movies_df, genre_sim, 'The Godfather', 10)
 similar_movies[['title', 'vote_average', "weighted_vote", "similarity"]]
-
+print(similar_movies)
