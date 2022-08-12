@@ -63,6 +63,7 @@ def find_movie():
                             # 조건에 맞는 영화 목록 저장
                             dic.append(result)
                             print(dic, file=sys.stderr)
+                        # 조건에 맞는 영화 목록 없음
                         if not dic:
                             return Response("입력하신 검색어와 일치하는 영화가 없습니다. 다시 검색해주세요.", status=404, mimetype='application/json')
                         # 검색된 영화 리스트를 반환
@@ -80,6 +81,7 @@ def find_movie():
                         # 조건에 맞는 영화 목록 저장
                         dic.append(result)
                         print(dic, file=sys.stderr)
+                    # 조건에 맞는 영화 목록 없음
                     if not dic:
                         return Response("입력하신 검색어와 일치하는 영화가 없습니다. 다시 검색해주세요.", status=404, mimetype='application/json')
                     # 검색된 영화 리스트를 반환
@@ -121,6 +123,7 @@ def find_movie():
                     print(dic, file=sys.stderr)
                 # 검색된 영화 리스트를 반환
                 togle = 0
+                # 조건에 맞는 영화 목록 없음
                 if not dic:
                     return Response("입력하신 검색어와 일치하는 영화가 없습니다. 다시 검색해주세요.", status=404, mimetype='application/json')
                 return Response(str(dic), status=200, mimetype='application/json')
@@ -137,6 +140,7 @@ def find_movie():
                     print(dic, file=sys.stderr)
                 # 검색된 영화 리스트를 반환
                 togle = 0
+                # 조건에 맞는 영화 목록 없음
                 if not dic:
                     return Response("입력하신 검색어와 일치하는 영화가 없습니다. 다시 검색해주세요.", status=404, mimetype='application/json')
                 return Response(str(dic), status=200, mimetype='application/json')
@@ -152,6 +156,7 @@ def find_movie():
                 # 조건에 맞는 영화 목록 저장
                 dic.append(result)
                 print(dic, file=sys.stderr)
+            # 조건에 맞는 영화 목록 없음
             if not dic:
                 return Response("입력하신 검색어와 일치하는 영화가 없습니다. 다시 검색해주세요.", status=404, mimetype='application/json')
             # 검색된 영화 리스트를 반환
