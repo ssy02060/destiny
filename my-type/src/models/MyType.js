@@ -2,18 +2,18 @@ const mongoose = require('mongoose');
 
 // Define Schemes
 const mytypeSchema = new mongoose.Schema({
-  userid: {type: String},
+  userId: {type: String, required : true, unique :true},
   tag: { 
-    genres: {type: String , required: true },
-    directors: {type: String , required: true },
-    movies: {type: String , required: true },
-    actors: {type: String , required: true }
+    genres: {type: [String] },
+    directors: {type: [String]},
+    movies: {type: [String] },
+    actors: {type: [String] }
   } ,
- },
+},
  {
    timestamps: true
  },
- { collection: 'MyType'}
+ { collection : "My-collection-name2"}
 );
 
 
@@ -21,7 +21,9 @@ const mytypeSchema = new mongoose.Schema({
 mytypeSchema.statics.create = function (payload) {
   // this === Model
   const myType = new this(payload);
+  console.log("##############")
   console.log(myType)
+  console.log("##############")
   // return Promise
   return myType.save();
 };
@@ -33,23 +35,23 @@ mytypeSchema.statics.findAll = function () {
   return this.find({});
 };
 
-// Find One by userid
-mytypeSchema.statics.findOneByuserid = function (userid) {
-  return this.findOne({ userid });
+// Find One by userId
+mytypeSchema.statics.findOneByuserId = function (userId) {
+  return this.findOne({ userId });
 };
 
-// Update by userid
-mytypeSchema.statics.updateByuserid = function (userid, payload) {
+// Update by userId
+mytypeSchema.statics.updateByuserId = function (userId, payload) {
   // { new: true }: return the modified document rather than the original. defaults to false
-  return this.findOneAndUpdate({ userid }, payload, { new: true });
+  return this.findOneAndUpdate({ userId }, payload, { new: true });
 };
 
-// Delete by userid
-mytypeSchema.statics.deleteByuserid = function (userid) {
-  return this.remove({ userid });
+// Delete by userId
+mytypeSchema.statics.deleteByuserId = function (userId) {
+  return this.remove({ userId });
 };
 
 // Create Model & Export
-module.exports = mongoose.model('MyType', mytypeSchema);
+module.exports = mongoose.model('new', mytypeSchema);
 
 
