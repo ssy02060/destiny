@@ -4,10 +4,15 @@ import Main from './pages/Main';
 import Review from './pages/Review';
 import NotFound from './pages/NotFound';
 import Header from './components/Header';
+import { IoSearchSharp } from 'react-icons/fa';
 
 const App = () => {
+    const style = {
+        backgroundColor: 'black',
+        border: '30px solid black'
+    }
     return (
-        <div className='App'>
+        <body className='App' style={style} >
             <BrowserRouter>
                 {/* <Header /> */}
                 <Header />
@@ -18,9 +23,7 @@ const App = () => {
                     <Route path="*" element={<NotFound />}></Route>
                 </Routes>
             </BrowserRouter>
-
-        </div>
+        </body>
     );
 }
-
 export default App;
