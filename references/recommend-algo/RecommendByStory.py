@@ -48,8 +48,8 @@ story_mat = count_vect.fit_transform(df['story'])
 # print(similarity_genre)
 similarity_story = cosine_similarity(story_mat, story_mat).argsort()[:,::-1]
 
-# 영화 제목
-def RecommendByMovieNm(df, movieNm, top=30):
+# 영화 줄거리로 유사도 계산하여 영화 추천
+def RecommendByStory(df, movieNm, top=30):
     # 특정 영화정보 뽑아내기
     target_movie_index = df[df['movieNm'] ==  movieNm].index.values
     # 타겟영화와 비슷한 코사인유사도값
@@ -84,5 +84,5 @@ def RecommendByMovieNm(df, movieNm, top=30):
 #     return result
 
 # recommend = RecommendByMovieNm(df, movieNm='범죄도시2')
-recommend = RecommendByMovieNm(df, movieNm='다만 악에서 구하소서')
+recommend = RecommendByStory(df, movieNm='다만 악에서 구하소서')
 print(recommend)
