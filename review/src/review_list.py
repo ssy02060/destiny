@@ -47,15 +47,15 @@ db.reviews.create_index(
 # json-POST
 @app.route('/send_post', methods=['GET'])
 def send_post():
-    review_list =  {"userId": "Eukgun","movieCd": "2223531","review": { "comment":"m", "rate":2}}
-    res = requests.post("http://192.168.5.135:4001/review", data=json.dumps(review_list))
+    review_list =  {"userId": "Eukgun","movieCd": "2222","review": { "comment":"m", "rate":2}}
+    res = requests.post("http://192.168.5.128:4000/review", data=json.dumps(review_list))
     return res.text
 
 # json-UPDATE
 @app.route('/send_update', methods=['GET'])
 def send_update():
     review_list =  {"userId": "Eukgun","movieCd": "2221","review": { "comment":"not good", "rate":0.5}}
-    res = requests.put("http://192.168.5.135:4001/review?_id=62f1a7c894a14052b20d96f9", data=json.dumps(review_list))
+    res = requests.put("http://192.168.5.128:4000/review?_id=62f1a7c894a14052b20d96f9", data=json.dumps(review_list))
     return res.text
 
 # reading review and insert review
@@ -118,15 +118,27 @@ def read_review():
 def delete_review():
     parameters = ''
     parameter_dict = request.args.to_dict()
+    a=[]
+    b=[]
     for key in parameter_dict.keys():
         parameters += 'key: {}, value: {}\n'.format(key, request.args[key])
-        print(key,file=sys.stderr)
-        a=[]
-        a.append[key]
-    if key == a[0] & a[1]:
-        reviews.delete_one({"userId":request.args.get('userId'),"movieCd":request.args.get('movieCd')})
-        return Response("Successfully deleted!", status=200, mimetype='application/json')
-
+        a.append(key)
+        b.append(request.args[key])
+    print(b,file=sys.stderr)
+    try:
+        if a[0] == "userId" and a[1] == "movieCd":
+            review_list = []
+            for review in reviews.find({"userId":b[0],"movieCd":b[1]}):
+                review_list.append(review)
+            if len(review_list) == 0:
+                return Response("User & Movie Not Found!", status=404, mimetype='application/json')
+            else:
+                reviews.delete_one({"userId":request.args.get('userId'),"movieCd":request.args.get('movieCd')})
+                return Response("Successfully deleted!", status=200, mimetype='application/json')
+        else:
+            return Response("No parameter", status=400, mimetype='application/json')
+    except:
+        return Response("Error", status=400, mimetype='application/json')
 # review update
 @app.route('/review', methods=['PUT'])
 def update_review():
