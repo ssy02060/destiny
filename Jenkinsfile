@@ -47,7 +47,7 @@ pipeline {
     //put your environment variables
     doError = '0'
     REGISTRY_ID = "844148244640"
-    DOCKER_REPO = "${REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/"
+    DOCKER_REPO = "${REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com"
     AWS_DEFAULT_REGION = "ap-northeast-2"
   }
   options {
