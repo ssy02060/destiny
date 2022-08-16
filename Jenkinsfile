@@ -9,28 +9,19 @@ def COLOR_MAP = [
 ]
 
 def build_services(services) {
-    sh "echo build services with docker"
     for(int i = 0; i < services.size(); i++){
-        sh '''
-        docker build \
-        -t $DOCKER_REPO/${services[i]}:$BUILD_NUMBER  \
-        --file ./${service}/Dockerfile.prod ./${service}
-        '''
+        sh "docker build -t $DOCKER_REPO/${services[i]}:$BUILD_NUMBER --file ./${service}/Dockerfile.prod ./${service}"
     }
 }
 
 
 def push_services(services) {
-    sh "echo push services with docker to ecr"
     for(int i = 0; i < services.size(); i++){
-        sh '''
-        docker push $DOCKER_REPO/${services[i]}:$BUILD_NUMBER
-        '''
+        sh "docker push $DOCKER_REPO/${services[i]}:$BUILD_NUMBER"
     }
 }
 
 def clean_up(services) {
-    sh "echo clean up services with docker to ecr"
     for(int i = 0; i < services.size(); i++){
         sh "docker rmi $DOCKER_REPO/${services[i]}:$BUILD_NUMBER"
     }
