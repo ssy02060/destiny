@@ -23,8 +23,22 @@ pipeline {
   stages {
     stage ('Build and Test') {
       steps {
-        build_services(frontend_services)
-        build_services(backend_services)
+        script{
+          frontend_services.each { service ->
+              sh '''
+              docker build \
+              -t ${DOCKER_REPO}/${service}:${BUILD_NUMBER}  \
+              --file ./${service}/Dockerfile.prod ./${service}
+              '''
+          }
+          backend_services.each { service ->
+              sh '''
+              docker build \
+              -t ${DOCKER_REPO}/${service}:${BUILD_NUMBER}  \
+              --file ./${service}/Dockerfile.prod ./${service}
+              '''
+          }
+        }
       }
     }  
     stage ('Artefact') {
@@ -33,8 +47,16 @@ pipeline {
           sh '''
           aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
           '''
-          push_services(frontend_services)
-          push_services(backend_services)
+          frontend_services.each { service ->
+              sh '''
+              docker push ${DOCKER_REPO}/${service}:${BUILD_NUMBER}
+              '''
+          }
+          backend_services.each {service ->
+            sh '''
+            docker push ${DOCKER_REPO}/${service}:${BUILD_NUMBER}
+            '''
+          }
         }  
       }
     }   
@@ -45,6 +67,8 @@ pipeline {
     }
   }
 }
+
+
 
 @NonCPS
 def build_services(services) {
@@ -62,11 +86,11 @@ def build_services(services) {
 }
 
 @NonCPS
-def push_services(list) {
+def push_services(services) {
     sh "echo push services with docker to ecr"
-    list.each { item ->
+    services.each { service ->
         sh '''
-        docker push ${DOCKER_REPO}/${item}:${BUILD_NUMBER}
+        docker push ${DOCKER_REPO}/${service}:${BUILD_NUMBER}
         '''
     }
 }
