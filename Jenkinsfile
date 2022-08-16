@@ -14,7 +14,7 @@ def build_services(services) {
     list.each { service ->
         sh '''
         docker build \
-        -t $DOCKER_REPO/${service}:$BUILD_NUMBER  \
+        -t ${DOCKER_REPO}/${service}:${BUILD_NUMBER}  \
         --file ./${service}/Dockerfile.prod ./${service}
 
         '''
@@ -26,7 +26,7 @@ def push_services(services) {
     sh "echo push services with docker to ecr"
     services.each { service ->
         sh '''
-        docker push $DOCKER_REPO/${service}:$BUILD_NUMBER
+        docker push ${DOCKER_REPO}/${service}:${BUILD_NUMBER}
         '''
     }
 }
@@ -35,8 +35,11 @@ def push_services(services) {
 def clean_up(services) {
     sh "echo clean up services with docker to ecr"
     services.each { service ->
-        sh "docker rmi $DOCKER_REPO/${service}:$BUILD_NUMBER"
+        sh "docker rmi ${DOCKER_REPO}/${service}:${BUILD_NUMBER}"
     }
+}
+def Greet(name) {
+    echo "Hello $DOCKER_REPO"
 }
 
 properties([pipelineTriggers([githubPush()])])
@@ -55,6 +58,7 @@ pipeline {
   stages {
     stage ('Build and Test') {
       steps {
+        Greet('sang')
         build_services(frontend_services)
         build_services(backend_services)
       }
