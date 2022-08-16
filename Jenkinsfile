@@ -34,10 +34,8 @@ pipeline {
       }
     }  
     stage ('Artefact') {
-      withAWS(credentials:'destiny-ecr-credentials') {
-        steps {
-          
-          // do something
+      steps {
+        withAWS(credentials:'destiny-ecr-credentials') {
           sh '''
           aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
           docker push ${DOCKER_REPO}:${BUILD_NUMBER}
