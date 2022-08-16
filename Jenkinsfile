@@ -10,7 +10,7 @@ def COLOR_MAP = [
 
 def build_services(services) {
     sh "echo build services with docker"
-    list.each { service ->
+    services.each { service ->
         sh '''
         docker build \
         -t $DOCKER_REPO/${service}:$BUILD_NUMBER  \
