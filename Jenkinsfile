@@ -17,8 +17,8 @@ pipeline {
     DOCKER_REPO = "${REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/gateway"
     AWS_DEFAULT_REGION = "ap-northeast-2"
   }
-    options {
-      buildDiscarder(logRotator(numToKeepStr: '20')) 
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '20')) 
   }   
   stages {
     stage ('Build and Test') {
@@ -34,9 +34,10 @@ pipeline {
       }
     }  
     stage ('Artefact') {
-      steps {
-        withAWS(credentials:'destiny-ecr-credentials') {
-    // do something
+      withAWS(credentials:'destiny-ecr-credentials') {
+        steps {
+          
+          // do something
           sh '''
           aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
           docker push ${DOCKER_REPO}:${BUILD_NUMBER}
