@@ -38,6 +38,9 @@ def clean_up(services) {
         sh "docker rmi ${DOCKER_REPO}/${service}:${BUILD_NUMBER}"
     }
 }
+def Greet(name) {
+    echo "Hello ${name}"
+}
 
 properties([pipelineTriggers([githubPush()])])
 pipeline {
@@ -55,6 +58,7 @@ pipeline {
   stages {
     stage ('Build and Test') {
       steps {
+        Greet('sang')
         build_services(frontend_services)
         build_services(backend_services)
       }
