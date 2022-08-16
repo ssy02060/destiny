@@ -31,7 +31,8 @@ pipeline {
       steps {
         sh '''
         docker build \
-        -t ${DOCKER_REPO}:${BUILD_NUMBER} .
+        -t ${DOCKER_REPO}:${BUILD_NUMBER}  \
+        --file ./gateway/Dockerfile.prod ./gateway 
         #put your Test cases
         echo 'Starting test cases'
         '''    
