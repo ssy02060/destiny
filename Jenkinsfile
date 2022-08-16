@@ -19,33 +19,56 @@ pipeline {
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '20')) 
-  }   
-  node{
-    stages {
-      stage ('Build and Test') {
-        steps {
-          build_services(frontend_services)
-          build_services(backend_services)
-        }
-      }  
-      stage ('Artefact') {
-        steps {
-          withAWS(credentials:'destiny-ecr-credentials') {
-            sh '''
-            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
-            '''
-            push_services(frontend_services)
-            push_services(backend_services)
-          }  
-        }
-      }   
-      stage('Cleanup') {
-        steps{
-          sh "docker rmi ${DOCKER_REPO}:${BUILD_NUMBER}"
-        }
+  }
+  node {
+    stage ('Build and Test') {
+      steps {
+        build_services(frontend_services)
+        build_services(backend_services)
+      }
+    }
+    stage ('Artefact') {
+      steps {
+        withAWS(credentials:'destiny-ecr-credentials') {
+          sh '''
+          aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
+          '''
+          push_services(frontend_services)
+          push_services(backend_services)
+        }  
+      }
+    }
+    stage('Cleanup') {
+      steps{
+        sh "docker rmi ${DOCKER_REPO}:${BUILD_NUMBER}"
       }
     }
   }
+  // stages {
+  //   stage ('Build and Test') {
+  //     steps {
+  //       build_services(frontend_services)
+  //       build_services(backend_services)
+  //     }
+  //   }  
+  //   stage ('Artefact') {
+  //     steps {
+  //       withAWS(credentials:'destiny-ecr-credentials') {
+  //         sh '''
+  //         aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
+  //         '''
+  //         push_services(frontend_services)
+  //         push_services(backend_services)
+  //       }  
+  //     }
+  //   }   
+  //   stage('Cleanup') {
+  //     steps{
+  //       clean_up(frontend_services)
+  //       clean_up(backend_services)
+  //     }
+  //   }
+  // }
 }
 
 
@@ -57,17 +80,26 @@ def build_services(services) {
         docker build \
         -t ${DOCKER_REPO}/${service}:${BUILD_NUMBER}  \
         --file ./${service}/Dockerfile.prod ./${service}
+
         '''
     }
 }
 
 @NonCPS
-def push_services(list) {
+def push_services(services) {
     sh "echo push services with docker to ecr"
-    list.each { item ->
+    services.each { service ->
         sh '''
-        docker push ${DOCKER_REPO}/${item}:${BUILD_NUMBER}
+        docker push ${DOCKER_REPO}/${service}:${BUILD_NUMBER}
         '''
+    }
+}
+
+@NonCPS
+def clean_up(services) {
+    sh "echo clean up services with docker to ecr"
+    services.each { service ->
+        sh "docker rmi ${DOCKER_REPO}/${service}:${BUILD_NUMBER}"
     }
 }
 
