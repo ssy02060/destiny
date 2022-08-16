@@ -1,7 +1,7 @@
-frontend_services = ['gateway']
-backend_services = ['review', 'my-type', 'movie']
-data_extractions = ['movie_data']
-recommendations = ['recommendation']
+def frontend_services = ['gateway']
+def backend_services = ['review', 'my-type', 'movie']
+def data_extractions = ['movie_data']
+def recommendations = ['recommendation']
 
 def COLOR_MAP = [
     'SUCCESS': 'good', 
@@ -37,7 +37,7 @@ def clean_up(services) {
     }
 }
 def Greet(name) {
-    echo "Hello $DOCKER_REPO"
+    echo "Hello ${name}"
 }
 
 properties([pipelineTriggers([githubPush()])])
@@ -56,6 +56,7 @@ pipeline {
   stages {
     stage ('Build and Test') {
       steps {
+        Greet(frontend_services[0])
         build_services(frontend_services)
         build_services(backend_services)
       }
