@@ -25,7 +25,7 @@ pipeline {
       steps {
         sh '''
         echo 'test'
-        sudo docker build \
+        docker build \
         -t ${DOCKER_REPO}:${BUILD_NUMBER}  \
         --file ./gateway/Dockerfile.prod ./gateway 
         #put your Test cases
