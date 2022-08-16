@@ -7,70 +7,6 @@ def COLOR_MAP = [
     'SUCCESS': 'good', 
     'FAILURE': 'danger',
 ]
-properties([pipelineTriggers([githubPush()])])
-pipeline {
-  agent any  
-  environment {
-    //put your environment variables
-    doError = '0'
-    REGISTRY_ID = "844148244640"
-    DOCKER_REPO = "${REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/"
-    AWS_DEFAULT_REGION = "ap-northeast-2"
-  }
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '20')) 
-  }
-  node {
-    stage ('Build and Test') {
-      steps {
-        build_services(frontend_services)
-        build_services(backend_services)
-      }
-    }
-    stage ('Artefact') {
-      steps {
-        withAWS(credentials:'destiny-ecr-credentials') {
-          sh '''
-          aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
-          '''
-          push_services(frontend_services)
-          push_services(backend_services)
-        }  
-      }
-    }
-    stage('Cleanup') {
-      steps{
-        sh "docker rmi ${DOCKER_REPO}:${BUILD_NUMBER}"
-      }
-    }
-  }
-  // stages {
-  //   stage ('Build and Test') {
-  //     steps {
-  //       build_services(frontend_services)
-  //       build_services(backend_services)
-  //     }
-  //   }  
-  //   stage ('Artefact') {
-  //     steps {
-  //       withAWS(credentials:'destiny-ecr-credentials') {
-  //         sh '''
-  //         aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
-  //         '''
-  //         push_services(frontend_services)
-  //         push_services(backend_services)
-  //       }  
-  //     }
-  //   }   
-  //   stage('Cleanup') {
-  //     steps{
-  //       clean_up(frontend_services)
-  //       clean_up(backend_services)
-  //     }
-  //   }
-  // }
-}
-
 
 @NonCPS
 def build_services(services) {
@@ -102,6 +38,49 @@ def clean_up(services) {
         sh "docker rmi ${DOCKER_REPO}/${service}:${BUILD_NUMBER}"
     }
 }
+
+properties([pipelineTriggers([githubPush()])])
+pipeline {
+  agent any  
+  environment {
+    //put your environment variables
+    doError = '0'
+    REGISTRY_ID = "844148244640"
+    DOCKER_REPO = "${REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/"
+    AWS_DEFAULT_REGION = "ap-northeast-2"
+  }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '20')) 
+  }
+  stages {
+    stage ('Build and Test') {
+      steps {
+        build_services(frontend_services)
+        build_services(backend_services)
+      }
+    }  
+    stage ('Artefact') {
+      steps {
+        withAWS(credentials:'destiny-ecr-credentials') {
+          sh '''
+          aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
+          '''
+          push_services(frontend_services)
+          push_services(backend_services)
+        }  
+      }
+    }   
+    stage('Cleanup') {
+      steps{
+        clean_up(frontend_services)
+        clean_up(backend_services)
+      }
+    }
+  }
+}
+
+
+
 
 
     // CHART_DIR="$JENKINS_HOME/workspace/helm-integration/helm"
