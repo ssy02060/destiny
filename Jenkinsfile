@@ -20,54 +20,33 @@ pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr: '20')) 
   }   
-  stages {
-    stage ('Build and Test') {
-      steps {
-        script{
-          frontend_services.each { service ->
-              sh '''
-              docker build \
-              -t ${DOCKER_REPO}/${service}:${BUILD_NUMBER}  \
-              --file ./${service}/Dockerfile.prod ./${service}
-              '''
-          }
-          backend_services.each { service ->
-              sh '''
-              docker build \
-              -t ${DOCKER_REPO}/${service}:${BUILD_NUMBER}  \
-              --file ./${service}/Dockerfile.prod ./${service}
-              '''
-          }
+  node{
+    stages {
+      stage ('Build and Test') {
+        steps {
+          build_services(frontend_services)
+          build_services(backend_services)
         }
-      }
-    }  
-    stage ('Artefact') {
-      steps {
-        withAWS(credentials:'destiny-ecr-credentials') {
-          sh '''
-          aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
-          '''
-          frontend_services.each { service ->
-              sh '''
-              docker push ${DOCKER_REPO}/${service}:${BUILD_NUMBER}
-              '''
-          }
-          backend_services.each {service ->
+      }  
+      stage ('Artefact') {
+        steps {
+          withAWS(credentials:'destiny-ecr-credentials') {
             sh '''
-            docker push ${DOCKER_REPO}/${service}:${BUILD_NUMBER}
+            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
             '''
-          }
-        }  
-      }
-    }   
-    stage('Cleanup') {
-      steps{
-        sh "docker rmi ${DOCKER_REPO}:${BUILD_NUMBER}"
+            push_services(frontend_services)
+            push_services(backend_services)
+          }  
+        }
+      }   
+      stage('Cleanup') {
+        steps{
+          sh "docker rmi ${DOCKER_REPO}:${BUILD_NUMBER}"
+        }
       }
     }
   }
 }
-
 
 
 @NonCPS
@@ -75,22 +54,19 @@ def build_services(services) {
     sh "echo build services with docker"
     list.each { service ->
         sh '''
-        echo 'test?'
         docker build \
         -t ${DOCKER_REPO}/${service}:${BUILD_NUMBER}  \
         --file ./${service}/Dockerfile.prod ./${service}
-        #put your Test cases
-        echo 'Starting test cases'
         '''
     }
 }
 
 @NonCPS
-def push_services(services) {
+def push_services(list) {
     sh "echo push services with docker to ecr"
-    services.each { service ->
+    list.each { item ->
         sh '''
-        docker push ${DOCKER_REPO}/${service}:${BUILD_NUMBER}
+        docker push ${DOCKER_REPO}/${item}:${BUILD_NUMBER}
         '''
     }
 }
