@@ -1,7 +1,7 @@
-def frontend_services = ['gateway']
-def backend_services = ['review', 'my-type', 'movie']
-def data_extractions = ['movie_data']
-def recommendations = ['recommendation']
+frontend_services = ['gateway']
+backend_services = ['review', 'my-type', 'movie']
+data_extractions = ['movie_data']
+recommendations = ['recommendation']
 
 def COLOR_MAP = [
     'SUCCESS': 'good', 
@@ -10,10 +10,10 @@ def COLOR_MAP = [
 
 def build_services(services) {
     sh "echo build services with docker"
-    services.each { service ->
+    for(int i = 0; i < services.size(); i++){
         sh '''
         docker build \
-        -t $DOCKER_REPO/${service}:$BUILD_NUMBER  \
+        -t $DOCKER_REPO/${services[i]}:$BUILD_NUMBER  \
         --file ./${service}/Dockerfile.prod ./${service}
 
         '''
@@ -23,17 +23,17 @@ def build_services(services) {
 
 def push_services(services) {
     sh "echo push services with docker to ecr"
-    services.each { service ->
+    for(int i = 0; i < services.size(); i++){
         sh '''
-        docker push $DOCKER_REPO/${service}:$BUILD_NUMBER
+        docker push $DOCKER_REPO/${services[i]}:$BUILD_NUMBER
         '''
     }
 }
 
 def clean_up(services) {
     sh "echo clean up services with docker to ecr"
-    services.each { service ->
-        sh "docker rmi $DOCKER_REPO/${service}:$BUILD_NUMBER"
+    for(int i = 0; i < services.size(); i++){
+        sh "docker rmi $DOCKER_REPO/${services[i]}:$BUILD_NUMBER"
     }
 }
 def Greet(name) {
