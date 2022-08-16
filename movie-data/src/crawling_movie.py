@@ -91,7 +91,7 @@ def getMovieInfo(year_codes):
     year = year_codes[0]
     codes = year_codes[1]
 
-    t = threading.Thread(target=getImage, args=(os.path.join(savePath, str(year)), codes))
+    t = threading.Thread(target=getImage, args=(os.path.join(savePath), codes))
     t.start()
  
     for i, code in enumerate(codes):
@@ -292,5 +292,5 @@ def crawling(s, e):
         # 역순으로 실행하게 for문 변경
  
 if __name__ == "__main__":
-    p1 = Process(target=crawling, args=(2023, 1990))
+    p1 = Process(target=crawling, args=(2023, 2022))
     p1.start()
