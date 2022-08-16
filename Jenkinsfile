@@ -1,7 +1,7 @@
-frontend_services = ['gateway']
-backend_services = ['review', 'my-type', 'movie']
-data_extractions = ['movie_data']
-recommendations = ['recommendation']
+def frontend_services = ['gateway']
+def backend_services = ['review', 'my-type', 'movie']
+def data_extractions = ['movie_data']
+def recommendations = ['recommendation']
 
 def COLOR_MAP = [
     'SUCCESS': 'good', 
