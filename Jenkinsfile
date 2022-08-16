@@ -25,7 +25,7 @@ pipeline {
       steps {
         sh '''
         echo 'test'
-        docker build \
+        sudo docker build \
         -t ${DOCKER_REPO}:${BUILD_NUMBER}  \
         --file ./gateway/Dockerfile.prod ./gateway 
         #put your Test cases
@@ -36,7 +36,7 @@ pipeline {
     stage ('Artefact') {
       steps {
         sh '''
-        $(aws ecr get-login --region ap-northeast-2 --no-include-email)
+        aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
         docker push ${DOCKER_REPO}:${BUILD_NUMBER}
         '''
       }
@@ -48,6 +48,7 @@ pipeline {
     }
   }
 }
+
 
     // CHART_DIR="$JENKINS_HOME/workspace/helm-integration/helm"
     // HELM_RELEASE_NAME = "api-service"
