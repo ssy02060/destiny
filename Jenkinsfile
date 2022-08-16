@@ -24,7 +24,7 @@ pipeline {
     stage ('Build and Test') {
       steps {
         sh '''
-        echo 'test'
+        echo 'test?'
         docker build \
         -t ${DOCKER_REPO}:${BUILD_NUMBER}  \
         --file ./gateway/Dockerfile.prod ./gateway 
