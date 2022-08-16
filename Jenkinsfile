@@ -16,15 +16,9 @@ pipeline {
     REGISTRY_ID = "844148244640"
     DOCKER_REPO = "${REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/gateway"
     AWS_DEFAULT_REGION = "ap-northeast-2"
-    // CHART_DIR="$JENKINS_HOME/workspace/helm-integration/helm"
-    // HELM_RELEASE_NAME = "api-service"
-    // ENV= """${sh(
-  	// 	returnStdout: true,
-  	// 	script: 'declare -n ENV=${GIT_BRANCH}_env ; echo "$ENV"'
-    // ).trim()}"""
   }
     options {
-        buildDiscarder(logRotator(numToKeepStr: '20')) 
+      buildDiscarder(logRotator(numToKeepStr: '20')) 
   }   
   stages {
     stage ('Build and Test') {
@@ -45,8 +39,23 @@ pipeline {
         $(aws ecr get-login --region ap-northeast-2 --no-include-email)
         docker push ${DOCKER_REPO}:${BUILD_NUMBER}
         '''
-        }
+      }
     }   
+    stage('Cleanup') {
+      steps{
+        sh "docker rmi ${DOCKER_REPO}:${BUILD_NUMBER}"
+      }
+    }
+  }
+}
+
+    // CHART_DIR="$JENKINS_HOME/workspace/helm-integration/helm"
+    // HELM_RELEASE_NAME = "api-service"
+    // ENV= """${sh(
+  	// 	returnStdout: true,
+  	// 	script: 'declare -n ENV=${GIT_BRANCH}_env ; echo "$ENV"'
+    // ).trim()}"""
+    
     // stage ('Deploy') {
     //   steps {
     //     sh '''
@@ -62,38 +71,33 @@ pipeline {
     //     '''
     //   }
     // }
-    stage('Cleanup') {
-      steps{
-        sh "docker rmi ${DOCKER_REPO}:${BUILD_NUMBER}"
-      }
-  }
-// slack notification configuration 
-  stage('Error') {
-    // when doError is equal to 1, return an error
-    when {
-        expression { doError == '1' }
-    }
-    steps {
-        echo "Failure :("
-        error "Test failed on purpose, doError == str(1)"
-    }
-}
-  stage('Success') {
-    // when doError is equal to 0, just print a simple message
-    when {
-        expression { doError == '0' }
-    }
-    steps {
-        echo "Success :)"
-    }
-}
-  }
+        
+    // slack notification configuration 
+    //   stage('Error') {
+    //     // when doError is equal to 1, return an error
+    //     when {
+    //         expression { doError == '1' }
+    //     }
+    //     steps {
+    //         echo "Failure :("
+    //         error "Test failed on purpose, doError == str(1)"
+    //     }
+    // }
+    // stage('Success') {
+    //   // when doError is equal to 0, just print a simple message
+    //   when {
+    //       expression { doError == '0' }
+    //   }
+    //   steps {
+    //       echo "Success :)"
+    //   }
+    // }
+
     // Post-build actions
-  post {
-      always {
-          slackSend channel: '#jenkins-notification',
-              color: COLOR_MAP[currentBuild.currentResult],
-              message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} More info at: $RUN_DISPLAY_URL"
-      }
-  }
-}
+  // post {
+  //     always {
+  //         slackSend channel: '#jenkins-notification',
+  //             color: COLOR_MAP[currentBuild.currentResult],
+  //             message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} More info at: $RUN_DISPLAY_URL"
+  //     }
+  // }
