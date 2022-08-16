@@ -55,7 +55,6 @@ pipeline {
   stages {
     stage ('Build and Test') {
       steps {
-        Greet('sang')
         build_services(frontend_services)
         build_services(backend_services)
       }
