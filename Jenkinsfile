@@ -15,7 +15,6 @@ def build_services(services) {
         docker build \
         -t $DOCKER_REPO/${services[i]}:$BUILD_NUMBER  \
         --file ./${service}/Dockerfile.prod ./${service}
-
         '''
     }
 }
@@ -36,8 +35,10 @@ def clean_up(services) {
         sh "docker rmi $DOCKER_REPO/${services[i]}:$BUILD_NUMBER"
     }
 }
-def Greet(name) {
-    echo "Hello ${name}"
+def Greet(list) {
+    for(int i = 0; i < list.size(); i++){
+        sh "echo hello ${list[i]}"
+    }
 }
 
 properties([pipelineTriggers([githubPush()])])
@@ -56,7 +57,7 @@ pipeline {
   stages {
     stage ('Build and Test') {
       steps {
-        Greet(frontend_services[0])
+        Greet(backend_services)
         build_services(frontend_services)
         build_services(backend_services)
       }
