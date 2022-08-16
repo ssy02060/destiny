@@ -8,6 +8,36 @@ def COLOR_MAP = [
     'FAILURE': 'danger',
 ]
 
+@NonCPS
+def build_services(services) {
+    sh "echo build services with docker"
+    list.each { service ->
+        sh '''
+        docker build \
+        -t $DOCKER_REPO/${service}:$BUILD_NUMBER  \
+        --file ./${service}/Dockerfile.prod ./${service}
+
+        '''
+    }
+}
+
+@NonCPS
+def push_services(services) {
+    sh "echo push services with docker to ecr"
+    services.each { service ->
+        sh '''
+        docker push $DOCKER_REPO/${service}:$BUILD_NUMBER
+        '''
+    }
+}
+
+@NonCPS
+def clean_up(services) {
+    sh "echo clean up services with docker to ecr"
+    services.each { service ->
+        sh "docker rmi $DOCKER_REPO/${service}:$BUILD_NUMBER"
+    }
+}
 
 properties([pipelineTriggers([githubPush()])])
 pipeline {
@@ -25,6 +55,7 @@ pipeline {
   stages {
     stage ('Build and Test') {
       steps {
+        Greet('sang')
         build_services(frontend_services)
         build_services(backend_services)
       }
@@ -49,33 +80,10 @@ pipeline {
   }
 }
 
-def build_services(services) {
-    sh "echo build services with docker"
-    for (int i = 0; i < services.size(); i++) { 
-        sh '''
-        docker build \
-        -t ${DOCKER_REPO}/${services[i]}:${BUILD_NUMBER}  \
-        --file ./${service}/Dockerfile.prod ./${service}
 
-        '''
-    }
-}
 
-def push_services(services) {
-    sh "echo push services with docker to ecr"
-    for (int i = 0; i < services.size(); i++) { 
-        sh '''
-        docker push ${DOCKER_REPO}/${services[i]}:${BUILD_NUMBER}
-        '''
-    }
-}
 
-def clean_up(services) {
-    sh "echo clean up services with docker to ecr"
-    for (int i = 0; i < services.size(); i++) { 
-        sh "docker rmi ${DOCKER_REPO}/${services[i]}:${BUILD_NUMBER}"
-    }
-}
+
     // CHART_DIR="$JENKINS_HOME/workspace/helm-integration/helm"
     // HELM_RELEASE_NAME = "api-service"
     // ENV= """${sh(
