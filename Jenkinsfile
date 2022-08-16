@@ -14,7 +14,7 @@ pipeline {
     //put your environment variables
     doError = '0'
     REGISTRY_ID = "844148244640"
-    DOCKER_REPO = "${REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/gateway"
+    DOCKER_REPO = "${REGISTRY_ID}.dkr.ecr.ap-northeast-2.amazonaws.com/"
     AWS_DEFAULT_REGION = "ap-northeast-2"
   }
   options {
@@ -23,14 +23,8 @@ pipeline {
   stages {
     stage ('Build and Test') {
       steps {
-        sh '''
-        echo 'test?'
-        docker build \
-        -t ${DOCKER_REPO}:${BUILD_NUMBER}  \
-        --file ./gateway/Dockerfile.prod ./gateway 
-        #put your Test cases
-        echo 'Starting test cases'
-        '''    
+        build_services(frontend_services)
+        build_services(backend_services)
       }
     }  
     stage ('Artefact') {
@@ -38,8 +32,9 @@ pipeline {
         withAWS(credentials:'destiny-ecr-credentials') {
           sh '''
           aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
-          docker push ${DOCKER_REPO}:${BUILD_NUMBER}
           '''
+          push_services(frontend_services)
+          push_services(backend_services)
         }  
       }
     }   
@@ -49,6 +44,31 @@ pipeline {
       }
     }
   }
+}
+
+@NonCPS
+def build_services(services) {
+    sh "echo build services with docker"
+    list.each { service ->
+        sh '''
+        echo 'test?'
+        docker build \
+        -t ${DOCKER_REPO}/${service}:${BUILD_NUMBER}  \
+        --file ./${service}/Dockerfile.prod ./${service}
+        #put your Test cases
+        echo 'Starting test cases'
+        '''
+    }
+}
+
+@NonCPS
+def push_services(list) {
+    sh "echo push services with docker to ecr"
+    list.each { item ->
+        sh '''
+        docker push ${DOCKER_REPO}/${item}:${BUILD_NUMBER}
+        '''
+    }
 }
 
 
