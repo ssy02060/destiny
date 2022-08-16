@@ -10,7 +10,7 @@ def COLOR_MAP = [
 
 def build_services(services) {
     for(int i = 0; i < services.size(); i++){
-        sh "docker build -t $DOCKER_REPO/${services[i]}:$BUILD_NUMBER --file ./${service}/Dockerfile.prod ./${service}"
+        sh "docker build -t $DOCKER_REPO/${services[i]}:$BUILD_NUMBER --file ./${services[i]}/Dockerfile.prod ./${services[i]}"
     }
 }
 
