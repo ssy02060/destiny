@@ -107,3 +107,4 @@ docker
 my-type/container
 data
 scripts/apply.sh
+account/config.json
