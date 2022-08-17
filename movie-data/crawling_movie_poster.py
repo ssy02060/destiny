@@ -46,7 +46,6 @@ def getMovieCodeByYear(year):
  
 def getMoviePoster(year_codes):
     codes = year_codes[1]
-    
     getImage(codes)
 
 def getImage(codes):

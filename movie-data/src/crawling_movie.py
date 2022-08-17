@@ -275,7 +275,6 @@ def getInfoSpec(html):
                         info['등급'] = a.text
     return info
  
- 
 def crawling(s, e):
     for i in range(s, e-1, -1):
         getMovieInfo(getMovieCodeByYear(i))
