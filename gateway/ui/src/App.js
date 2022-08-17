@@ -7,12 +7,9 @@ import Header from './components/Header';
 import { IoSearchSharp } from 'react-icons/fa';
 
 const App = () => {
-    const style = {
-        backgroundColor: 'black',
-        border: '30px solid black'
-    }
+ 
     return (
-        <body className='App' style={style} >
+        <body  >
             <BrowserRouter>
                 {/* <Header /> */}
                 <Header />
