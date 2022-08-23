@@ -31,8 +31,6 @@ mydb.command({
 mydb.movieInfo.create_index(
     [('movieCd', 1)], name='movieCd', unique=True)
 
-savePath = r'/home/joo/Documents/project/destiny/movie-data/movie_Information'
-
 movieInfo = {
     'openYear': '',
     'movieCd': '',
@@ -45,7 +43,8 @@ movieInfo = {
     'watchGradeNm': '',
     'genre': '',
     'rate': '',
-    'story': ''
+    'story': '',
+    'imageUrl': ''
 }
 
 def getMovieCodeByYear(year):
@@ -81,21 +80,14 @@ def getMovieCodeByYear(year):
             else : 
                 print(response2.status_code)
     else : 
-        print(response.status_code)
-        
+        print(response.status_code) 
     return year, movieCode
  
- 
 def getMovieInfo(year_codes):
-    global savePath
     year = year_codes[0]
     codes = year_codes[1]
-
-    t = threading.Thread(target=getImage, args=(os.path.join(savePath), codes))
-    t.start()
  
     for i, code in enumerate(codes):
-        #print(f'{i}/{len(codes)}', end='\r')
         url = f'https://movie.naver.com/movie/bi/mi/point.naver?code={code}'
         response = requests.get(url)
 
@@ -111,7 +103,8 @@ def getMovieInfo(year_codes):
             'watchGradeNm': '',
             'genre': '',
             'rate': '',
-            'story': ''
+            'story': '',
+            'imageUrl': ''
         }
  
         if response.status_code == 200:
@@ -154,17 +147,18 @@ def getMovieInfo(year_codes):
                 print(movieInfo['directors'])
                 movieInfo['actors'] = info_spec['출연']
                 print(movieInfo['actors'])
-
  
             story = getStory(f'https://movie.naver.com/movie/bi/mi/basic.naver?code={code}')
             if story:
                 movieInfo['story'] = story
                 print(movieInfo['story'])
- 
+            imageUrl = getPoster(code)
+            if imageUrl:
+                movieInfo['imageUrl'] = imageUrl
+                print(movieInfo['imageUrl'])
         else : 
             print(response.status_code)
-        print("*"*15,i,"*"*15)
-        print("*"*33)
+
         mydb.movieInfo.insert_one(movieInfo)
  
 def getRate(htmls):
@@ -196,24 +190,20 @@ def getStory(url):
     else : 
         print(response.status_code)
  
-def getImage(path, codes):
-    if not os.path.isdir(os.path.join(path)):
-        os.makedirs(path)
+def getPoster(code):
+    url = f'https://movie.naver.com/movie/bi/mi/photoViewPopup.naver?movieCode={code}'
+    response = requests.get(url)
+    imageUrl = ''
+    if response.status_code == 200:
+        html = response.text
+        soup = BeautifulSoup(html, 'lxml')
+        imageUrl = soup.find('img', id='targetImage')
+        if imageUrl is not None:
+            imageUrl = imageUrl.attrs['src']     
+            return imageUrl
+    else:
+        return imageUrl
     
-    for code in codes:
-        url = f'https://movie.naver.com/movie/bi/mi/photoViewPopup.naver?movieCode={code}'
-        response = requests.get(url)
- 
-        if response.status_code == 200:
-            html = response.text
-            soup = BeautifulSoup(html, 'lxml')
-            imgUrl = soup.find('img', id='targetImage')
-            if imgUrl is not None:
-                imgUrl = imgUrl.attrs['src']
-                with open(os.path.join(path, code+'.png'), 'wb') as poster:
-                    poster.write(requests.get(imgUrl).content)
-        else:
-            print(response.status_code)
  
 def getInfoSpec(html):
     dtList = html.find_all('dt')
@@ -284,7 +274,6 @@ def getInfoSpec(html):
                     else:
                         info['등급'] = a.text
     return info
- 
  
 def crawling(s, e):
     for i in range(s, e-1, -1):

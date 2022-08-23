@@ -12,6 +12,28 @@ DBHOST = os.environ['DBHOST']
 def root():
     return 'Movie API'
 
+@app.route('/movie/poster',methods=['GET'])
+# 파라미터로 movieCd 넘겨주면 포스터 출력
+def view_poster():
+    client = MongoClient(host=DBHOST, port=27017)
+    mydb = client['movie_data']
+    parameter_dict = request.args.to_dict()
+
+    # 입력된 파라미터가 없을 때
+    if len(parameter_dict) == 0:
+        return Response("검색어를 입력하세요.", status=404, mimetype='application/json')
+    # 입력된 파라미터 1개
+    elif len(parameter_dict) == 1:
+        for key in parameter_dict.keys():
+            results = mydb.movieInfo.find({'movieCd': parameter_dict[key]}, {"_id":0})
+            imgUrl = []
+            for result in results:
+                if result['imgeUrl'] is not None:
+                    imgUrl.append(result['imageUrl'])
+                else:
+                    return Response("영화 포스터가 존재하지 않습니다. 다른 영화를 검색해주세요.", status=404, mimetype='application/json')
+        return Response(str(imgUrl), status=200, mimetype='application/json')
+
 @app.route('/movie',methods=['GET'])
 def find_movie():
     client = MongoClient(host=DBHOST, port=27017)
