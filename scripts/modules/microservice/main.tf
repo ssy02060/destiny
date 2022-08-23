@@ -76,42 +76,42 @@ output "repository_url" {
   value       = aws_ecr_repository.repo.repository_url
 }
 
-resource "null_resource" "docker_build" {
+# resource "null_resource" "docker_build" {
 
-  triggers = {
-    always_run = timestamp()
-  }
+#   triggers = {
+#     always_run = timestamp()
+#   }
 
-  provisioner "local-exec" {
-    command = "docker build -t ${local.image_tag} --file ../${var.service_name}/Dockerfile.prod ../${var.service_name}"
-  }
-}
+#   provisioner "local-exec" {
+#     command = "docker build -t ${local.image_tag} --file ../${var.service_name}/Dockerfile.prod ../${var.service_name}"
+#   }
+# }
 
-resource "null_resource" "null_for_ecr_get_login_password" {
-  depends_on = [null_resource.docker_build]
+# resource "null_resource" "null_for_ecr_get_login_password" {
+#   depends_on = [null_resource.docker_build]
 
-  triggers = {
-    always_run = timestamp()
-  }
-  provisioner "local-exec" {
-    command = <<EOF
-      aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${aws_ecr_repository.repo.repository_url}
-    EOF
-  }
-}
+#   triggers = {
+#     always_run = timestamp()
+#   }
+#   provisioner "local-exec" {
+#     command = <<EOF
+#       aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${aws_ecr_repository.repo.repository_url}
+#     EOF
+#   }
+# }
 
-resource "null_resource" "docker_push" {
+# resource "null_resource" "docker_push" {
 
-  depends_on = [null_resource.null_for_ecr_get_login_password]
+#   depends_on = [null_resource.null_for_ecr_get_login_password]
 
-  triggers = {
-    always_run = timestamp()
-  }
+#   triggers = {
+#     always_run = timestamp()
+#   }
 
-  provisioner "local-exec" {
-    command = "docker push ${local.image_tag}"
-  }
-}
+#   provisioner "local-exec" {
+#     command = "docker push ${local.image_tag}"
+#   }
+# }
 
 # locals {
 #   dockercreds = {
