@@ -25,6 +25,16 @@ module "gateway-microservice" {
 #     DBHOST : local.database
 #   }
 # }
+module "account-microservice" {
+  source       = "./modules/microservice"
+  service_name = "account"
+  app_version  = var.app_version
+  env = {
+    DBHOST : local.database
+  }
+}
+
+
 module "movie-microservice" {
   source       = "./modules/microservice"
   service_name = "movie"

@@ -1,5 +1,5 @@
 def frontend_services = ['gateway']
-def backend_services = ['review', 'my-type', 'movie']
+def backend_services = ['review', 'my-type', 'movie', 'account']
 def data_extractions = ['movie_data']
 def recommendations = ['recommendation']
 
