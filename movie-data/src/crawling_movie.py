@@ -7,8 +7,20 @@ from multiprocessing import Process
 
 from pymongo import MongoClient
 
-client = MongoClient(host='192.168.19.128', port=27017)
-mydb = client['movie_data']
+
+PORT = os.environ['PORT']
+DB_PASSWORD = os.environ['DB_PASSWORD']
+
+reader_endpoint = 'destiny.cluster-ro-cvj4baspdxd6.ap-northeast-2.docdb.amazonaws.com'
+writer_endpoint  = 'destiny.cluster-cvj4baspdxd6.ap-northeast-2.docdb.amazonaws.com'
+
+# WRITER_ENDPOINT = os.environ['WRITER_ENDPOINT']
+# READER_ENDPOINT = os.environ['READER_ENDPOINT']
+
+writer_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + writer_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false')
+reader_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + reader_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false')
+
+mydb = writer_client['movie_data']
 
 vexpr = {
     "$jsonSchema": {
