@@ -237,6 +237,7 @@ def getInfoSpec(html):
                 if '분' in span.text:
                     info['상영시간'] = span.text
                 else:
+                    genre=[]
                     for a in span.find_all('a'):
                         if 'genre' in str(a):
                             # 공연실황 제외 - 이건 뭐 하는건지?
@@ -244,9 +245,11 @@ def getInfoSpec(html):
                             if '공연실황' in a.text:
                                 continue
                             if info['장르'] != '':
-                                info['장르'] += ', ' + a.text
+                                genre.append(a.text)
+                                info['장르'] = genre
                             else:
-                                info['장르'] = a.text
+                                genre.append(a.text)
+                                info['장르'] = genre
                         # 국가도 여러개인 경우가 있네요
                         elif 'nation' in str(a):
                             if info['국가'] != '':
@@ -260,21 +263,28 @@ def getInfoSpec(html):
                             else:
                                 info['개봉'] = a.text
         elif '감독' in dt.text:
+            directors = []
             for a in dd.find_all('a'):
                 # 감독이 여러명인 경우가 있어서 - 루소 형제 등?
                 if info['감독'] != '':
-                    info['감독'] += ', ' + a.text
+                    directors.append(a.text)
+                    info['감독'] = directors
                 else:
-                    info['감독'] = a.text
+                    directors.append(a.text)
+                    info['감독'] = directors
         elif '출연' in dt.text:
+            actors = []
             for a in dd.find_all('a'):
                 # 메인 출연진이 아니라면 pass
                 if '더보기' in a.text:
                     continue
                 if info['출연'] != '':
-                    info['출연'] += ', ' + a.text
+                    actors.append(a.text)
+                    info['출연'] = actors
+                    # info['출연'] += ', ' + a.text
                 else:
-                    info['출연'] = a.text
+                    actors.append(a.text)
+                    info['출연'] = actors
         # 등급의 경우 한국 등급만 가져오려면 수정이 필요
         # 한국 등급이 없는 경우를 대비해서 일본, 미국 등의 등급이라도 가져오기 위해
         # 별다른 수정은 안 했습니다.
