@@ -1,5 +1,4 @@
 Flask
 boto3
 pymongo
-numpy
 pandas
