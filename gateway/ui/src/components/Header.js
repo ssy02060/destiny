@@ -1,20 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import "./Header.css";
-import { FcSearch } from "react-icons/fc";
+
 import { useEffect, useState } from "react";
-import searchicon from "../style/search_item.png"
 
 function Header() {
     const [search, setSearch] = useState("");
-    const onChange = (e) => {
-        setSearch(e.target.value)
+    const onSearchChange = (e) => {
+        setSearch(e.currentTarget.value);
+        console.log(e.currentTarget.value)
     }
+   
 
     return (
-        
-        <div className='header'>
 
+        <div className='header'>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <Link to="/" style={{ position: 'fixed', top: '0px', left: '100px', display: 'flex', textDecoration: "none" }}>
                 <font color="FFDF65" size='5'><h1>DESTINY</h1></font>
 
@@ -25,21 +26,19 @@ function Header() {
                 </Link><Link to="/review">
                     <font color="ffffff" size='5' style={{ position: 'fixed', top: '50px', left: '650px', display: 'flex' }} >실시간 리뷰</font>
                 </Link>
+
             </body>
-           {/*  <div >
-
-                <form style={{ position: 'fixed', top: '50px', left: '1000px', display: 'flex' }}>
-                    <input type="text" value={search} onChange={onChange} />
-
-
+            <div class="search-box" style={{ position: 'fixed', top: '50px', left: '1250px', display: 'flex' }}>
+                <form action="." method="post">
+                    <input class="search-txt" type="text" placeholder="검색어를 입력해 주세요" onChange={onSearchChange}></input>
+                    <button class="search-btn" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </form>
-
-            </div>*/}
-
-
-
+            </div>
+            
         </div>
-     
+
 
     );
 }
@@ -47,16 +46,3 @@ function Header() {
 
 export default Header;
 
-/*
-<div >
-            <form style={{position : 'fixed', top : '80px', left:'1100px', display: 'flex'}}>
-              <input type='text' maxLength='20' className='search_input' name='search' placeholder='검색어를 입력해주세요.'/>
-                <div>
-                
-                
-                <img className='search_icon' src={searchicon}  />
-              <input type='submit' value='검색' className='serach_submit'/>
-              </div>
-            </form>
-        </div>
-        *///<img className='search_icon' src={searchicon} />
