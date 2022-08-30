@@ -4,5 +4,5 @@ COPY ./src ./src
 COPY ./requirements.txt ./requirements.txt
 RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
-EXPOSE 5000
+# RUN pip3 install pandas
 CMD python3 ./src/app.py
