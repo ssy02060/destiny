@@ -17,29 +17,33 @@ writer_endpoint  = 'destiny.cluster-cvj4baspdxd6.ap-northeast-2.docdb.amazonaws.
 # WRITER_ENDPOINT = os.environ['WRITER_ENDPOINT']
 # READER_ENDPOINT = os.environ['READER_ENDPOINT']
 
-writer_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + writer_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false')
-reader_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + reader_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false')
+writer_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + writer_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', maxPoolSize=200)
+reader_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + reader_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', maxPoolSize=200)
 
 mydb = writer_client['movie_data']
 
-vexpr = {
-    "$jsonSchema": {
-        "title": "movieInfo",
-        "description": "movieInfo schema contains movieCd",
-        "bsonType": "object",
-        "required": ["movieCd"],
-        "properties": {
-            "movieCd": {
-                "bsonType": "string",
-            }
-        }
-    }
-}
-mydb.command({
-    'collMod': "movieInfo",
-    'validator': vexpr,
-    'validationLevel': "moderate"
-})
+# mydb.movieInfo.delete_many({'openYear':2023})
+# mydb.movieInfo.delete_many({'openYear':2022})
+
+# vexpr = {
+#     "$jsonSchema": {
+#         "title": "movieInfo",
+#         "description": "movieInfo schema contains movieCd",
+#         "bsonType": "object",
+#         "required": ["movieCd"],
+#         "properties": {
+#             "movieCd": {
+#                 "bsonType": "string",
+#             }
+#         }
+#     }
+# }
+# mydb.command({
+#     'collMod': "movieInfo",
+#     'validator': vexpr,
+#     'validationLevel': "moderate"
+# })
+
 mydb.movieInfo.create_index(
     [('movieCd', 1)], name='movieCd', unique=True)
 
@@ -303,5 +307,5 @@ def crawling(s, e):
         # 역순으로 실행하게 for문 변경
  
 if __name__ == "__main__":
-    p1 = Process(target=crawling, args=(2023, 2022))
+    p1 = Process(target=crawling, args=(2009, 1990))
     p1.start()
