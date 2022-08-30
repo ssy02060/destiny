@@ -3,10 +3,18 @@ from pymongo import MongoClient
 import os
 import sys
 
-app = Flask("api_test")
+app = Flask("Movie")
 
 PORT = os.environ['PORT']
-DBHOST = os.environ['DBHOST']
+DB_PASSWORD = os.environ['DB_PASSWORD']
+reader_endpoint = 'destiny.cluster-ro-cvj4baspdxd6.ap-northeast-2.docdb.amazonaws.com'
+writer_endpoint  = 'destiny.cluster-cvj4baspdxd6.ap-northeast-2.docdb.amazonaws.com'
+# WRITER_ENDPOINT = os.environ['WRITER_ENDPOINT']
+# READER_ENDPOINT = os.environ['READER_ENDPOINT']
+
+
+# mydb = writer_client['movie_data']
+
 
 @app.route('/')
 def root():
@@ -15,8 +23,10 @@ def root():
 @app.route('/movie/poster',methods=['GET'])
 # 파라미터로 movieCd 넘겨주면 포스터 출력
 def view_poster():
-    client = MongoClient(host=DBHOST, port=27017)
-    mydb = client['movie_data']
+    writer_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + writer_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', maxPoolSize=200)
+    reader_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + reader_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', maxPoolSize=200)
+    mydb = reader_client['movie_data']
+    
     parameter_dict = request.args.to_dict()
 
     # 입력된 파라미터가 없을 때
@@ -36,8 +46,9 @@ def view_poster():
 
 @app.route('/movie',methods=['GET'])
 def find_movie():
-    client = MongoClient(host=DBHOST, port=27017)
-    mydb = client['movie_data']
+    writer_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + writer_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', maxPoolSize=200)
+    reader_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + reader_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', maxPoolSize=200)
+    mydb = reader_client['movie_data']
     parameter_dict = request.args.to_dict()
 
     # 년도 판별
