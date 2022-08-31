@@ -1,0 +1,68 @@
+
+.poster_Box {
+  width: 150px;
+  Opacity: 100%;
+  height: 200px;
+  box-sizing: border-box;
+  color : white;
+  float : left;
+  font-size: 8px;;
+  margin-inline-start: 10px;
+  margin-bottom: 10px;
+  
+}
+
+.info_Box {
+  width: 150px;
+  Opacity: 100%;
+  height: 80px;
+  margin-top: 20px;
+  padding-top: 10px;
+  margin-left: 15px;
+  box-sizing: border-box;
+  list-style-type: none;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+}
+.movie_Box {
+  width: 400px;
+  Opacity: 100%;
+  height: 340px;
+  box-sizing: border-box;
+  color : white;
+  list-style-type: none;
+  padding-top: 10px;
+
+  
+}
+
+  .movie_List_Box{
+    width: 1440px;
+    color : white;
+    padding-top: 130px;
+    border: 10px;
+    padding-left: 100px;
+    flex-direction: row;
+    
+    
+  }
+ 
+  
+ .font{
+  color:"ffffff";
+  font-size: 35px;
+
+ }
+ .react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
+  display: none;
+}
+.react-horizontal-scrolling-menu--scroll-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+
+.modal{
+  padding-top: 200px;
+  background-color: aquamarine;
+}

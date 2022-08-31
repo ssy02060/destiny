@@ -1,8 +1,7 @@
-FROM python:3.8.5-alpine
+FROM python:3.8.5
 WORKDIR /usr/src/app
 COPY ./src ./src
 COPY ./requirements.txt ./requirements.txt
 RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
-# RUN pip3 install pandas
 CMD python3 ./src/app.py
