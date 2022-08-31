@@ -23,15 +23,17 @@ def recommend():
     
     parameter_dict = request.args.to_dict()
     movieCd = []
+           
     for key in parameter_dict.keys():
         movieCd.append(parameter_dict[key])
-    
+
     movies = mydb.movieInfo.find({'movieCd': {'$in':movieCd}})
 
     d = []
     for movie in movies:
         d.append(movie)
     df1 = pd.DataFrame(list(d))
+
     actors = []
     directors = []
     genre = []
@@ -45,7 +47,7 @@ def recommend():
             genre.append(df1['genre'][i][j])
 
     # mongodb에서 영화 data 불러오기
-    results = mydb.movieInfo.find({'$nor':[{'movieNm':{'$in':Nm}}],
+    results = mydb.movieInfo.find({'$nor':[{'movieCd':{'$in':movieCd}}],
                             '$and':[
                                 {'actors': {'$in':actors}},
                                 # {'directors': {'$in':directors}}
@@ -62,7 +64,13 @@ def recommend():
     final_index = temp.index.values[ :15]
     result = df.iloc[final_index]
 
-    return Response(result, status=200, mimetype='application/json')
+    result.reset_index(inplace=True)
+    result.index = result.index+1
+    result.drop(columns=['index'], inplace=True)
+
+    return Response(result.to_html(), status=200)
+    # return Response(result.to_html(), status=200, mimetype='application/json')
+    # return Response(result, status=200, mimetype='application/json')
 
 
 @app.route('/genreNm')
