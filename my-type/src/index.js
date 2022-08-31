@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 mongoose.Promise = global.Promise;
 
 // Connect to MongoDB
-mongoose.connect(process.env.DBHOST)
+mongoose.connect(process.env.WRITER_ENDPOINT)
   .then(() => console.log('Successfully connected to mongodb'))
   .catch(e => console.error(e));
 
