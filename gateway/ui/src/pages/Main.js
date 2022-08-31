@@ -1,74 +1,72 @@
-import React, { Component } from 'react';
-import "./Main.css";
-import Header from '../components/Header';
-import Movie_list from "./movie_data"
+import React, { useState } from 'react';
+import movie from '../sample-data/movie.json' //json형식 데이터를 불러올때는 풀네임 적어줘야 함
+import MovieList from './MovieList';
+import Modal from './Modal';
 
-class Main extends Component {
-    render() {
-        return (
-            
-            <div className='movie_List_Box'>
-                <h2 className='font' ><b>박스 오피스 순위</b></h2>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-                {Movie_list.map(movie => {
-                    return <Movie MovieNm={movie.MovieNm} poster={movie.poster}
-                        year={movie.year} view={movie.view}
+const Main = () => {
 
-                    />
-                })}
-               
-               </div>  
+    const [data, setData] = useState(movie)
+    const [movieInfo, setMovieInfo] = useState(data[0])
 
+    const [isShow, setIsShow] = useState(false)
 
-                    <h2 className='font' ><b>평균 별점이 높은 작품</b></h2>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                {Movie_list.map(movie => {
-                    return <Movie MovieNm={movie.MovieNm} poster={movie.poster}
-                        year={movie.year} view={movie.view}
-
-                    />
-                })}
-               
-               </div>  
-                    <h2 className='font' ><b>User님의 예상별점이 높은 작품</b></h2>
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                {Movie_list.map(movie => {
-                    return <Movie MovieNm={movie.MovieNm} poster={movie.poster}
-                        year={movie.year} view={movie.view}
-
-                    />
-                })}
-               
-               </div>  
-               
-            
-            </div>
-        );
+    const onOver = (id) => {
+        const num = data.findIndex(item => item.rank === id)
+        setMovieInfo(data[num])
+        //setMovieInfo(data.find(item=>item.rank===id))   
+        setIsShow(true)
     }
-}
 
+    //open은 view한테 보낸다
+    const onOpen = () => {
+        setIsShow(true)
+    }
 
-class Movie extends Component {
-    render() {
-        return (
+    //close는 modal한테 보낸다.
+    const onClose = () => {
+        setIsShow(false)
+    }
 
-            <li className='movie_Box'>
-                <div>
-                    <img className='poster_Box ' src={this.props.poster} />
+    return (
+        <>  
+            <div>
+                <div className='movie_List_Box'>
+                    <h2 className='font' ><b>박스 오피스 순위</b></h2>
+                  
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+
+                        <MovieList data={data} onOver={onOver} />
+                    </div>
+                   
                 </div>
+            </div>
+            
+            <div>
+                <div className='movie_List_Box'>
+                    <h2 className='font' ><b>평균 별점이 높은 작품</b></h2>
 
-                <dl className='info_Box ' >
-                    <h3>{this.props.MovieNm}</h3>
-                    <h3>{this.props.year}</h3>
-                    <h3>{this.props.view}</h3>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
 
-                </dl>
+                        <MovieList data={data} onOver={onOver} />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div className='movie_List_Box'>
+                    <h2 className='font' ><b>User님의 예상별점이 높은 작품</b></h2>
 
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
 
-            </li>
-
-        )
-    }
-}
+                        <MovieList data={data} onOver={onOver} />
+                    </div>
+                </div>
+            </div>
+            {/* isShow가 true일 때만 보여라 */}
+            {
+                isShow && <Modal onClose={onClose} movieInfo={movieInfo} />
+            }
+        </>
+    );
+};
 
 export default Main;

@@ -1,27 +1,48 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import "./Header.css"
+import "./Header.css";
 
-function Header (){
+import { useEffect, useState } from "react";
+
+function Header() {
+    const [search, setSearch] = useState("");
+    const onSearchChange = (e) => {
+        setSearch(e.currentTarget.value);
+        console.log(e.currentTarget.value)
+    }
+   
+
     return (
+
         <div className='header'>
-        
-            <Link to="/" style={{position : 'fixed', top : '1px', left:'46px', display: 'flex'}}>
-                <h1><font color = "FFDF65"><h1>DESTINY</h1></font></h1>
-                
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <Link to="/" style={{ position: 'fixed', top: '0px', left: '100px', display: 'flex', textDecoration: "none" }}>
+                <font color="FFDF65" size='5'><h1>DESTINY</h1></font>
+
             </Link>
-            <body >  
-                 <font color = "ffffff" size = '5'  style={{position : 'fixed', top : '110px', left:'450px', display: 'flex'}}>평가하기</font>
-                 <Link to="/review">
-                 <font color = "ffffff" size = '5' style={{position : 'fixed', top : '110px', left:'650px', display: 'flex'}} >실시간 리뷰</font>
-                 </Link>
-             </body>
-        
+            <body >
+                <Link to="/rating">
+                    <font color="ffffff" size='5' style={{ position: 'fixed', top: '50px', left: '450px', display: 'flex' }}>평가하기</font>
+                </Link><Link to="/review">
+                    <font color="ffffff" size='5' style={{ position: 'fixed', top: '50px', left: '650px', display: 'flex' }} >실시간 리뷰</font>
+                </Link>
+
+            </body>
+            <div class="search-box" style={{ position: 'fixed', top: '50px', left: '1250px', display: 'flex' }}>
+                <form action="." method="post">
+                    <input class="search-txt" type="text" placeholder="검색어를 입력해 주세요" onChange={onSearchChange}></input>
+                    <button class="search-btn" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            
         </div>
-        
-       
+
+
     );
 }
 
 
 export default Header;
+
