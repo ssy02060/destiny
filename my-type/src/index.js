@@ -19,9 +19,12 @@ app.use(bodyParser.json());
 
 // Node의 native Promise 사용
 mongoose.Promise = global.Promise;
+DB_PASSWORD = process.env.DB_PASSWORD
 
+mongodb://root:'+ DB_PASSWORD + '@' + writer_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false
+DB_HOST = `mongodb://root:${DB_PASSWORD}@${process.env.WRITER_ENDPOINT}:27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false`
 // Connect to MongoDB
-mongoose.connect(process.env.WRITER_ENDPOINT)
+mongoose.connect(DB_HOST)
   .then(() => console.log('Successfully connected to mongodb'))
   .catch(e => console.error(e));
 
