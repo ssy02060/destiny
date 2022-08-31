@@ -7,27 +7,43 @@ from multiprocessing import Process
 
 from pymongo import MongoClient
 
-client = MongoClient(host='192.168.19.128', port=27017)
-mydb = client['movie_data']
 
-vexpr = {
-    "$jsonSchema": {
-        "title": "movieInfo",
-        "description": "movieInfo schema contains movieCd",
-        "bsonType": "object",
-        "required": ["movieCd"],
-        "properties": {
-            "movieCd": {
-                "bsonType": "string",
-            }
-        }
-    }
-}
-mydb.command({
-    'collMod': "movieInfo",
-    'validator': vexpr,
-    'validationLevel': "moderate"
-})
+PORT = os.environ['PORT']
+DB_PASSWORD = os.environ['DB_PASSWORD']
+
+reader_endpoint = 'destiny.cluster-ro-cvj4baspdxd6.ap-northeast-2.docdb.amazonaws.com'
+writer_endpoint  = 'destiny.cluster-cvj4baspdxd6.ap-northeast-2.docdb.amazonaws.com'
+
+# WRITER_ENDPOINT = os.environ['WRITER_ENDPOINT']
+# READER_ENDPOINT = os.environ['READER_ENDPOINT']
+
+writer_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + writer_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', maxPoolSize=200)
+reader_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + reader_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', maxPoolSize=200)
+
+mydb = writer_client['movie_data']
+
+# mydb.movieInfo.delete_many({'openYear':2023})
+# mydb.movieInfo.delete_many({'openYear':2022})
+
+# vexpr = {
+#     "$jsonSchema": {
+#         "title": "movieInfo",
+#         "description": "movieInfo schema contains movieCd",
+#         "bsonType": "object",
+#         "required": ["movieCd"],
+#         "properties": {
+#             "movieCd": {
+#                 "bsonType": "string",
+#             }
+#         }
+#     }
+# }
+# mydb.command({
+#     'collMod': "movieInfo",
+#     'validator': vexpr,
+#     'validationLevel': "moderate"
+# })
+
 mydb.movieInfo.create_index(
     [('movieCd', 1)], name='movieCd', unique=True)
 
@@ -225,6 +241,7 @@ def getInfoSpec(html):
                 if '분' in span.text:
                     info['상영시간'] = span.text
                 else:
+                    genre=[]
                     for a in span.find_all('a'):
                         if 'genre' in str(a):
                             # 공연실황 제외 - 이건 뭐 하는건지?
@@ -232,9 +249,11 @@ def getInfoSpec(html):
                             if '공연실황' in a.text:
                                 continue
                             if info['장르'] != '':
-                                info['장르'] += ', ' + a.text
+                                genre.append(a.text)
+                                info['장르'] = genre
                             else:
-                                info['장르'] = a.text
+                                genre.append(a.text)
+                                info['장르'] = genre
                         # 국가도 여러개인 경우가 있네요
                         elif 'nation' in str(a):
                             if info['국가'] != '':
@@ -248,21 +267,28 @@ def getInfoSpec(html):
                             else:
                                 info['개봉'] = a.text
         elif '감독' in dt.text:
+            directors = []
             for a in dd.find_all('a'):
                 # 감독이 여러명인 경우가 있어서 - 루소 형제 등?
                 if info['감독'] != '':
-                    info['감독'] += ', ' + a.text
+                    directors.append(a.text)
+                    info['감독'] = directors
                 else:
-                    info['감독'] = a.text
+                    directors.append(a.text)
+                    info['감독'] = directors
         elif '출연' in dt.text:
+            actors = []
             for a in dd.find_all('a'):
                 # 메인 출연진이 아니라면 pass
                 if '더보기' in a.text:
                     continue
                 if info['출연'] != '':
-                    info['출연'] += ', ' + a.text
+                    actors.append(a.text)
+                    info['출연'] = actors
+                    # info['출연'] += ', ' + a.text
                 else:
-                    info['출연'] = a.text
+                    actors.append(a.text)
+                    info['출연'] = actors
         # 등급의 경우 한국 등급만 가져오려면 수정이 필요
         # 한국 등급이 없는 경우를 대비해서 일본, 미국 등의 등급이라도 가져오기 위해
         # 별다른 수정은 안 했습니다.
@@ -281,5 +307,5 @@ def crawling(s, e):
         # 역순으로 실행하게 for문 변경
  
 if __name__ == "__main__":
-    p1 = Process(target=crawling, args=(2023, 2022))
+    p1 = Process(target=crawling, args=(2009, 1990))
     p1.start()

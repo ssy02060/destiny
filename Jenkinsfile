@@ -1,5 +1,5 @@
 def frontend_services = ['gateway']
-def backend_services = ['review', 'my-type', 'movie']
+def backend_services = ['review', 'my-type', 'movie', 'account']
 def data_extractions = ['movie_data']
 def recommendations = ['recommendation']
 
@@ -55,7 +55,7 @@ pipeline {
     }  
     stage ('Artefact') {
       steps {
-        withAWS(credentials:'destiny-ecr-credentials') {
+        withAWS(credentials:'aws-credentials') {
           sh '''
           aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${DOCKER_REPO}
           '''
