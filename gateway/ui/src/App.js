@@ -5,13 +5,12 @@ import Review from './pages/Review';
 import Login from './pages/Login';
 import Rating from './pages/Rating';
 import NotFound from './pages/NotFound';
-import MyType from './pages/mytype';
+import MyType from './pages/MyType';
 import SignUp from './pages/SignUp';
-import Detail from './pages/detail';
 
-import testDB from './pages/testDB.json';
+import testDB from './data/testDB.json';
 import Header from './components/Header';
-import Navbar from './components/Navbar'
+
 import { IoSearchSharp } from 'react-icons/fa';
 
 const App = () => {
@@ -23,7 +22,6 @@ const App = () => {
                 <Header />
                 <Routes>
                     <Route path="/" element={<Main />}></Route>
-                    <Route path="/detail/*" element={<Detail />}></Route>
                     <Route path="/Review/*" element={<Review />}></Route>
                     <Route path="/Login/*" element={<Login />}></Route>
                     <Route path="/mytype/*" element={<MyType />}></Route>

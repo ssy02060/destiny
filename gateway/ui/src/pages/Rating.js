@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import './style.css';
+import '../style/Modal.css';
 import "../style/Review.css";
-import movie from './movie_data2.json' //json형식 데이터를 불러올때는 풀네임 적어줘야 함
-
+import movie from '../data/movie.json' //json형식 데이터를 불러올때는 풀네임 적어줘야 함
+import MovieItem from './MovieItem';
 import MovieList from './MovieList';
-import Modal from './Modal';
+import Rating_Modal from './RatingModal.js';
 
 const Rating= () => {
 
@@ -30,6 +30,8 @@ const Rating= () => {
         setIsShow(false)
     }
 
+   
+
     return (
         <>
         <div>
@@ -38,16 +40,43 @@ const Rating= () => {
 
        
        
-            <MovieList data={data} onOver={onOver}/>
-        
+            {/* <MovieList data={data} onOver={onOver}/> */}
+            {
+                            data.map(data=><RatingMovieItem 
+                                item={data} onOver={onOver}/>)
+                        } 
+           
         </div>
         </div>
         {/* isShow가 true일 때만 보여라 */}
         {
-            isShow && <Modal onClose={onClose} movieInfo={movieInfo}/>
+            isShow && <Rating_Modal onClose={onClose} movieInfo={movieInfo}/>
         }
         </>
     );
 };
+const RatingMovieItem = ({item,onOver}) => {
 
+    const {rank,poster,MovieNm, year} = item
+
+    return (
+       
+        <>
+      
+
+        <li onClick={()=>onOver(rank)}>
+        <img className='poster_Box ' src={poster}  alt={MovieNm}/>
+        <dl className='info_Box ' >
+                  
+                    
+
+                </dl>
+
+            
+        </li>
+        
+       
+        </>
+    );
+};
 export default Rating;

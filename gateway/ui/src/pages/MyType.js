@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import "../style/mytype.css"
-import Movie_list from "./movie_data"
+import "../style/MyType.css"
+import Movie_list from "../data/movie_data"
 
 
 class Movie extends Component {
