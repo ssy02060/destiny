@@ -8,7 +8,7 @@ import NotFound from './pages/NotFound';
 import MyType from './pages/MyType';
 import SignUp from './pages/SignUp';
 
-import testDB from './data/testDB.json';
+
 import Header from './components/Header';
 
 import { IoSearchSharp } from 'react-icons/fa';

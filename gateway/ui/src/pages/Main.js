@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import movie from '../data/movie.json' //json형식 데이터를 불러올때는 풀네임 적어줘야 함
+import movie from '../sample-data/movie.json' //json형식 데이터를 불러올때는 풀네임 적어줘야 함
 import MovieList from './MovieList';
 import Modal from './Modal';
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "../style/Review.css";
-import Movie_list from "../data/movie_data"
+import Movie_list from "../sample-data/movie_data"
 
 import StarRatings from 'react-star-ratings';
 

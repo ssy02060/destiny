@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../style/Modal.css';
 import "../style/Review.css";
-import movie from '../data/movie.json' //json형식 데이터를 불러올때는 풀네임 적어줘야 함
+import movie from '../sample-data/movie.json' //json형식 데이터를 불러올때는 풀네임 적어줘야 함
 import MovieItem from './MovieItem';
 import MovieList from './MovieList';
 import Rating_Modal from './RatingModal.js';
