@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 mongoose.Promise = global.Promise;
 DB_PASSWORD = process.env.DB_PASSWORD
 
-mongodb://root:'+ DB_PASSWORD + '@' + writer_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false
+// mongodb://root:'+ DB_PASSWORD + '@' + writer_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false
 DB_HOST = `mongodb://root:${DB_PASSWORD}@${process.env.WRITER_ENDPOINT}:27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false`
 // Connect to MongoDB
 mongoose.connect(DB_HOST)
