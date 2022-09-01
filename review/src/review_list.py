@@ -17,30 +17,30 @@ db = client['Destiny']
 reviews = db.reviews
 
 #json schema
-vexpr = {
-        "$jsonSchema" : {
-            "title" : "reviews",
-            "description" : "reviews schema contains userId, movieCd, review",
-            "bsonType" : "object",
-            "required" : ["userId", "movieCd"],
-            "properties" : {
-                "userId" : {
-                    "bsonType" : "string",
-                },
-                "movieCd" : {
-                    "bsonType" : "string",
-                },
-                "review" : {
-                    "bsonType" : "object",
-                },
-            },
-        }
-    }
-db.command({
-    'collMod': "reviews",
-    'validator': vexpr,
-    'validationLevel': "moderate"
-})
+# vexpr = {
+#         "$jsonSchema" : {
+#             "title" : "reviews",
+#             "description" : "reviews schema contains userId, movieCd, review",
+#             "bsonType" : "object",
+#             "required" : ["userId", "movieCd"],
+#             "properties" : {
+#                 "userId" : {
+#                     "bsonType" : "string",
+#                 },
+#                 "movieCd" : {
+#                     "bsonType" : "string",
+#                 },
+#                 "review" : {
+#                     "bsonType" : "object",
+#                 },
+#             },
+#         }
+#     }
+# db.command({
+#     'collMod': "reviews",
+#     'validator': vexpr,
+#     'validationLevel': "moderate"
+# })
 db.reviews.create_index(
     [('userId', 1), ('movieCd', 1)], name='userId', unique=True)
     
