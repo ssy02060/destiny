@@ -11,7 +11,7 @@ const Main = () => {
     const [isShow, setIsShow] = useState(false)
 
     const onOver = (id) => {
-        const num = data.findIndex(item => item.rank === id)
+        const num = data.findIndex(item => item.movieCd === id)
         setMovieInfo(data[num])
         //setMovieInfo(data.find(item=>item.rank===id))   
         setIsShow(true)

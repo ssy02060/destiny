@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import "../style/Review.css";
-import Movie_list from "../sample-data/movie_data"
+import Movie_list from "../sample-data/movie"
 
 import StarRatings from 'react-star-ratings';
 
 
-class Movie extends Component {
+class ReviewMovie extends Component {
 
     changeRating(newRating, name) {
         this.setState({
@@ -13,30 +13,29 @@ class Movie extends Component {
         });
     }
     render() {
-        var rate = 0;
-        rate = parseInt(this.props.rating)
+        var rates = 0;
+        rates = parseFloat(this.props.rate)
 
         return (
 
             <li className='review_Box'>
 
                 <div>
-                    <img className='poster_Box ' src={this.props.poster} />
+                    <img className='poster_Box ' src={this.props.imageUrl} />
                 </div>
 
                 <div className='info' >
-                    <h3 className='MovieNm' >{this.props.MovieNm}</h3>
-                    <h3 className='year'>{this.props.year}</h3>
+                    <h3 className='MovieNm' >{this.props.movieNm}</h3>
+                    <h3 className='year'>{this.props.openDt}</h3>
                     <StarRatings
 
-                        rating={rate}
+                        rating={rates}
                         starDimension="40px"
                         starSpacing="5px"
 
-
                     />
 
-                    <h3 className='userid'>작성자 : {this.props.userid}</h3>
+                    <h3 className='userid'>작성자 : {this.props.id}</h3>
                     <h1 className='comment'>{this.props.comment}</h1>
                 </div>
 
@@ -55,8 +54,8 @@ class Review extends Component {
         return (
             <div className='layout_Box'>
                 {Movie_list.map(movie => {
-                    return <Movie MovieNm={movie.MovieNm} poster={movie.poster}
-                        year={movie.year} rating={movie.rating} userid={movie.userid}
+                    return <ReviewMovie movieNm={movie.movieNm} imageUrl={movie.imageUrl}
+                        openDt={movie.openDt} rate={movie.rate} id={movie.id}
                         comment={movie.comment}
 
                     />

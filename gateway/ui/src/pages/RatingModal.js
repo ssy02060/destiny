@@ -37,7 +37,7 @@ const Rating_Modal = ({onClose,movieInfo}) => {
       $body.style.overflow = "hidden";
       return () => ($body.style.overflow = "auto");
     }, []);
-    const {poster,MovieNm, rank, year} = movieInfo
+    const { imageUrl, movieNm, movieCd, openDt,nationNm, rate }= movieInfo
     console.log("modal")
     const ratingChanged = (newRating) => {
         console.log(newRating);
@@ -51,8 +51,8 @@ const Rating_Modal = ({onClose,movieInfo}) => {
            <i className="fa-solid fa-xmark"></i>
          </CloseButton>
          <Contents>
-       <h3>{MovieNm}</h3>
-       <h3>{year}</h3>
+       <h3>{movieNm}</h3>
+       <h3>{openDt} | {nationNm}</h3>
        <ReactStars
     count={5}
     onChange={ratingChanged => {
