@@ -1,79 +1,17 @@
-const express = require('express');
-const request = require('request');
-const path = require("path");
-const http = require("http");
-const bodyParser = require("body-parser");
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-app = express();
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
 
-const PORT = process.env.PORT;
-const DBHOST = process.env.DBHOST;
-
-app.get('/', function (req, res) {
-    res.send();
-});
-// -------------------------------------------------------------
-// Get the list of reviews from the review microservice.
-// -------------------------------------------------------------
-app.get('/review', (req, res) => {
-    http.request(
-        {
-            host: `review`,
-            path: `/review`,
-            method: `GET`,
-        },
-        (response) => {
-            let data = "";
-            response.on("data", chunk => {
-                data += chunk;
-            });
-
-            response.on("end", () => {
-                // data를 기반으로 렌더링하는 작업 필요
-                res.send(data);
-            });
-
-            response.on("error", err => {
-                console.error("Failed to get video list.");
-                console.error(err || `Status code: ${response.statusCode}`);
-                res.sendStatus(500);
-            });
-        }
-    ).end();
-});
-// -------------------------------------------------------------
-// Get the list of user's type from the my-type microservice.
-// -------------------------------------------------------------
-app.get('/my-type', (req, res) => {
-    http.request(
-        {
-            host: `my-type`,
-            path: `/my-type`,
-            method: `GET`,
-        },
-        (response) => {
-            let data = "";
-            response.on("data", chunk => {
-                data += chunk;
-            });
-
-            response.on("end", () => {
-                // data를 기반으로 렌더링하는 작업 필요
-                res.send(data);
-            });
-
-            response.on("error", err => {
-                console.error("Failed to get video list.");
-                console.error(err || `Status code: ${response.statusCode}`);
-                res.sendStatus(500);
-            });
-        }
-    ).end();
-});
-
-app.listen(PORT, function () {
-    console.log('server on! ' + PORT);
-});
-
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
