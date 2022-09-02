@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import os
 import sys
 import pandas as pd
-import requests
+import requests, json
 import re
 
 app = Flask("Recommendation")
@@ -15,9 +15,18 @@ writer_endpoint  = os.environ['WRITER_ENDPOINT']
 
 @app.route('/')
 def hello():
-    response = requests.get('http://my-type/mytype')
-    print(response)
-    return str(response.status_code)
+    res = requests.get('http://my-type/mytype/admin2')
+    text = res.text
+    text = text.replace("_id", "\"_id\"")
+    text = text.replace("new ObjectId", "ObjectId")
+    text = text.replace("userId", "\"userId\"")
+    text = text.replace("movies", "\"movies\"")
+    text = text.replace("__v", "\"__v\"")
+    text = text.replace("'", "\"")
+    print(text)
+    json_obj = json.loads(text)
+    print(json_obj)
+    return json_obj['movies']
 
 @app.route('/recommendation')
 def recommend():
@@ -25,7 +34,11 @@ def recommend():
     reader_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + reader_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', maxPoolSize=200)
     mydb = reader_client['movie_data']
 
-    # response = requests.get('http://my-type/mytype')
+    res = requests.get('http://my-type/mytype')
+    text = res.text
+    data = json.loads(text)
+    user = data[0]
+    print(user['movies'])
 
     parameter_dict = request.args.to_dict()
     movieCd = []
