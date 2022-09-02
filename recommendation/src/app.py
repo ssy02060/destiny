@@ -15,15 +15,8 @@ writer_endpoint  = os.environ['WRITER_ENDPOINT']
 
 @app.route('/')
 def hello():
-    res = requests.get('http://my-type/mytype/admin2')
+    res = requests.get('http://my-type/mytype/admin')
     text = res.text
-    text = text.replace("_id", "\"_id\"")
-    text = text.replace("new ObjectId", "ObjectId")
-    text = text.replace("userId", "\"userId\"")
-    text = text.replace("movies", "\"movies\"")
-    text = text.replace("__v", "\"__v\"")
-    text = text.replace("'", "\"")
-    print(text)
     json_obj = json.loads(text)
     print(json_obj)
     return json_obj['movies']
@@ -34,20 +27,18 @@ def recommend():
     reader_client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + reader_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', maxPoolSize=200)
     mydb = reader_client['movie_data']
 
-    res = requests.get('http://my-type/mytype')
+    res = requests.get('http://my-type/mytype/admin')
     text = res.text
-    data = json.loads(text)
-    user = data[0]
-    print(user['movies'])
+    json_obj = json.loads(text)
 
-    parameter_dict = request.args.to_dict()
-    movieCd = []
+    # parameter_dict = request.args.to_dict()
+    # movieCd = []
     
-    for key in parameter_dict.keys():
-        movieCd.append(parameter_dict[key])
+    # for key in parameter_dict.keys():
+    #     movieCd.append(parameter_dict[key])
 
-    movies = mydb.movieInfo.find({'movieCd': {'$in':movieCd}})
-
+    # movies = mydb.movieInfo.find({'movieCd': {'$in':movieCd}})
+    movies = mydb.movieInfo.find({'movieCd': {'$in':json_obj['movies']}})
     d = []
     for movie in movies:
         d.append(movie)
@@ -65,8 +56,14 @@ def recommend():
         for j in range(len(df1['genre'][i])):
             genre.append(df1['genre'][i][j])
 
+    # # mongodb에서 영화 data 불러오기
+    # results = mydb.movieInfo.find({'$nor':[{'movieCd':{'$in':movieCd}}],
+    #                         '$and':[
+    #                             {'actors': {'$in':actors}},
+    #                             {'genre': {'$in':genre}}
+    #                             ]})
     # mongodb에서 영화 data 불러오기
-    results = mydb.movieInfo.find({'$nor':[{'movieCd':{'$in':movieCd}}],
+    results = mydb.movieInfo.find({'$nor':[{'movieCd':{'$in':json_obj['movies']}}],
                             '$and':[
                                 {'actors': {'$in':actors}},
                                 {'genre': {'$in':genre}}
