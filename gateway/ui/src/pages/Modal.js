@@ -3,7 +3,11 @@
 import React, { useEffect, useState, useRef, Component } from 'react';
 import { AiOutlineCloseCircle, AiFillCloseCircle} from "react-icons/ai";
 import { RiCloseCircleFill } from "react-icons/ri";
+import { TbStar } from "react-icons/tb";
 import styled from "styled-components";
+import "../style/Modal.css"
+import PureModal from 'react-pure-modal';
+import 'react-pure-modal/dist/react-pure-modal.min.css';
 
 function useOutSideClick(ref, callback) {
     useEffect(() => {
@@ -22,7 +26,8 @@ function useOutSideClick(ref, callback) {
 
 const Modal = ({ onClose, movieInfo }) => {
 
-    const { poster, MovieNm, rank, year, rating } = movieInfo
+       
+        const { imageUrl, movieNm,story, movieCd, openDt,nationNm, rate ,comment,showTm,directors,actors,watchGradeNm,genre} = movieInfo
     console.log("modal")
     const modalRef = useRef(null)
     const handleClose = () => {
@@ -42,23 +47,32 @@ const Modal = ({ onClose, movieInfo }) => {
 
                 <ModalWrap ref={modalRef}>
 
-
-                    {/* <CloseButton onClick={handleClose}>
-       <i className="fa-solid fa-xmark"></i>
-     </CloseButton> */}
+                
+                  
                     <Contents>
-                        
-                        <img className='poster_Box ' src={poster} alt={MovieNm} />
+                    
+                        <img  src={imageUrl} alt={movieNm} />
                         <p className='close' onClick={onClose}>
                      <RiCloseCircleFill/>
                  </p>
-                        {/* <Button onClick={handleClose}><AiOutlineCloseCircle />
-                        </Button> */}
+                        
                         <Info>
-                        <h3>{year}</h3>
-                        <h3>{rating}</h3>
+                        <h1>{openDt} | {nationNm}</h1>
+                        <h1>평점<TbStar/> {rate}</h1>
+<HorizonLine/>
                         <h2>기본정보</h2>
-                        <h3>{MovieNm}</h3>
+                        <h1>{movieNm}</h1>
+                        <h1>{showTm}</h1>
+                        
+                        <h1>{story}</h1>
+                        <HorizonLine/>
+                        <h2>상세정보</h2>
+                        <h1>감독 : {directors}</h1>
+                        <h1>출연진 : {actors}</h1>
+                        <h1>관람등급 : {watchGradeNm}</h1>
+                        <HorizonLine/>
+                        <h2>비슷한 작품</h2>
+                        
                         </Info>
                         
 
@@ -85,7 +99,21 @@ const Modal = ({ onClose, movieInfo }) => {
         // </div>
     );
 };
+const HorizonLine = () => {
+  return (
+    <div
+      style={{
+        width: "100%",
+        textAlign: "center",
+        borderBottom: "1px solid #aaa",
+        lineHeight: "0.1em",
+        margin: "10px 0 20px",
+      }}
+    >
 
+    </div>
+  );
+};
 const Overlay = styled.div`
   position: fixed;
   width: 100%;
@@ -99,7 +127,7 @@ const Overlay = styled.div`
 `;
 
 const ModalWrap = styled.div`
-  width: 500px;
+  width: 600px;
   height: fit-content;
   border-radius: 0px;
   background-color: #fff;
@@ -107,6 +135,8 @@ const ModalWrap = styled.div`
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+  max-height: 100%;
+ 
 `;
 
 const CloseButton = styled.div`
@@ -124,18 +154,19 @@ const CloseButton = styled.div`
 const Contents = styled.div`
   margin: 0;
   h1 {
-    font-size: 30px;
+    font-size: 15px;
     font-weight: 600;
-    margin-bottom: 60px;
+    margin-bottom: 5px;
   }
   img {
     
     width: 100%;
+    height : 314px;
   }
-  background-color: #ababab;
+  background-color: #fff;
   borderWidth: 2,
   borderRadius: 5,
- 
+  
  borderStyle: 'dotted'
 `;
 

@@ -1,85 +1,122 @@
 [
     {
-        
-        "poster": "https://img.hankyung.com/photo/202206/PCM20220420000287005_P4.jpg",
-        "MovieNm": "한산 : 용의 출현",
-        "year": "2022 | 한국",
-        "rating": "4.3",
-        "userid": "destiny",
+        "openYear": 2022,
+        "movieCd": 1,
+        "movieNm": "한산 : 용의 출현",
+        "openDt": "2022",
+        "nationNm": "한국",
+        "imageUrl": "https://img.hankyung.com/photo/202206/PCM20220420000287005_P4.jpg",
+        "rate": "4.3",
+        "id": "destiny",
         "comment": "good~",
-        "rank" :1,
-        "summary" : "요약내용"
-
+        "story": "꿈을 꾸는 사람들을 위한 별들의 도시 ‘라라랜드’에서 재즈 피아니스트 세바스찬(라이언 고슬링 분)과 배우 지망생 미아(엠마 스톤 분)가 만난다. 두 사람은 미완성이지만, 사랑과 희망, 그리고 열정으로 인생에서 가장 빛나는 순간인 무대를 만들어가기 시작한다.",
+        "showTm": "2시간 30분",
+        "directors":"봉준호",
+        "actors" : "에이, 비" ,
+        "watchGradeNm" :"15세 이상 관람가",
+        "genre" :"로맨스"
     },
     {
-        "poster": "http://www.kobis.or.kr/common/mast/movie/2016/11/thumb_x289/thn_9230ca1ac71c47f79510ed7d92a3f795.jpg",
-        "MovieNm": "라라랜드",
-        "year": "2022 | 한국",
-        "rating": "4.3",
-        "userid": "destiny",
+        "openYear": 2022,
+        "movieCd": 2,
+        "movieNm": "라라랜드",
+        "openDt": "2022",
+        "nationNm": "한국",
+        "imageUrl": "http://www.kobis.or.kr/common/mast/movie/2016/11/thumb_x289/thn_9230ca1ac71c47f79510ed7d92a3f795.jpg",
+        "rate": "1",
+        "id": "destiny",
         "comment": "good~",
-        "rank" :2
-
+        "story": "꿈을 꾸는 사람들을 위한 별들의 도시 ‘라라랜드’에서 재즈 피아니스트 세바스찬(라이언 고슬링 분)과 배우 지망생 미아(엠마 스톤 분)가 만난다. 두 사람은 미완성이지만, 사랑과 희망, 그리고 열정으로 인생에서 가장 빛나는 순간인 무대를 만들어가기 시작한다.",
+        "showTm": "2시간 30분",
+        "directors":"봉준호",
+        "actors" : "에이, 비" ,
+        "watchGradeNm" :"15세 이상 관람가",
+        "genre" :"로맨스"
     },
     {
-        "poster": "http://www.kobis.or.kr/common/mast/movie/2020/04/thumb_x289/thn_a135f0c03510497a90ab6a0773dd901e.jpg",
-        "MovieNm": "애프터 웨딩 인 뉴욕",
-        "year": "2022 | 한국",
-        "rating": "4.3",
-        "userid": "destiny",
+        "openYear": 2022,
+        "movieCd": 3,
+        "movieNm": "애프터 웨딩 인 뉴욕",
+        "openDt": "2022",
+        "nationNm": "한국",
+        "imageUrl": "http://www.kobis.or.kr/common/mast/movie/2020/04/thumb_x289/thn_a135f0c03510497a90ab6a0773dd901e.jpg",
+        "rate": "3",
+        "id": "destiny",
         "comment": "good~",
-        "rank" :3
-
+        "story": "꿈을 꾸는 사람들을 위한 별들의 도시 ‘라라랜드’에서 재즈 피아니스트 세바스찬(라이언 고슬링 분)과 배우 지망생 미아(엠마 스톤 분)가 만난다. 두 사람은 미완성이지만, 사랑과 희망, 그리고 열정으로 인생에서 가장 빛나는 순간인 무대를 만들어가기 시작한다.",
+        "showTm": "2시간 30분",
+        "directors":"봉준호",
+        "actors" : "에이, 비" ,
+        "watchGradeNm" :"15세 이상 관람가",
+        "genre" :"로맨스"
     },
     {
-        "poster": "https://img.hankyung.com/photo/202206/PCM20220420000287005_P4.jpg",
-        "MovieNm": "한산4 : 용의 출현",
-        "year": "2022 | 한국",
-        "rating": "4.3",
-        "userid": "destiny",
+        "openYear": 2022,
+        "movieCd": 4,
+        "movieNm": "애프터 웨딩 인 뉴욕",
+        "openDt": "2022",
+        "nationNm": "한국",
+        "imageUrl": "http://www.kobis.or.kr/common/mast/movie/2020/04/thumb_x289/thn_a135f0c03510497a90ab6a0773dd901e.jpg",
+        "rate": "3",
+        "id": "destiny",
         "comment": "good~",
-        "rank" :4
-
+        "story": "꿈을 꾸는 사람들을 위한 별들의 도시 ‘라라랜드’에서 재즈 피아니스트 세바스찬(라이언 고슬링 분)과 배우 지망생 미아(엠마 스톤 분)가 만난다. 두 사람은 미완성이지만, 사랑과 희망, 그리고 열정으로 인생에서 가장 빛나는 순간인 무대를 만들어가기 시작한다.",
+        "showTm": "2시간 30분",
+        "directors":"봉준호",
+        "actors" : "에이, 비" ,
+        "watchGradeNm" :"15세 이상 관람가",
+        "genre" :"로맨스"
     },
     {
-        "poster": "http://www.kobis.or.kr/common/mast/movie/2016/11/thumb_x289/thn_9230ca1ac71c47f79510ed7d92a3f795.jpg",
-        "MovieNm": "라라랜드",
-        "year": "2022 | 한국",
-        "rating": "4.3",
-        "userid": "destiny",
+        "openYear": 2022,
+        "movieCd": 5,
+        "movieNm": "애프터 웨딩 인 뉴욕",
+        "openDt": "2022",
+        "nationNm": "한국",
+        "imageUrl": "http://www.kobis.or.kr/common/mast/movie/2020/04/thumb_x289/thn_a135f0c03510497a90ab6a0773dd901e.jpg",
+        "rate": "3",
+        "id": "destiny",
         "comment": "good~",
-        "rank" :5
-
+        "story": "꿈을 꾸는 사람들을 위한 별들의 도시 ‘라라랜드’에서 재즈 피아니스트 세바스찬(라이언 고슬링 분)과 배우 지망생 미아(엠마 스톤 분)가 만난다. 두 사람은 미완성이지만, 사랑과 희망, 그리고 열정으로 인생에서 가장 빛나는 순간인 무대를 만들어가기 시작한다.",
+        "showTm": "2시간 30분",
+        "directors":"봉준호",
+        "actors" : "에이, 비" ,
+        "watchGradeNm" :"15세 이상 관람가",
+        "genre" :"로맨스"
     },
     {
-        "poster": "http://www.kobis.or.kr/common/mast/movie/2016/11/thumb_x289/thn_9230ca1ac71c47f79510ed7d92a3f795.jpg",
-        "MovieNm": "라라랜드",
-        "year": "2022 | 한국",
-        "rating": "4.3",
-        "userid": "destiny",
+        "openYear": 2022,
+        "movieCd": 6,
+        "movieNm": "애프터 웨딩 인 뉴욕",
+        "openDt": "2022",
+        "nationNm": "한국",
+        "imageUrl": "http://www.kobis.or.kr/common/mast/movie/2020/04/thumb_x289/thn_a135f0c03510497a90ab6a0773dd901e.jpg",
+        "rate": "3",
+        "id": "destiny",
         "comment": "good~",
-        "rank" :6
-
+        "story": "꿈을 꾸는 사람들을 위한 별들의 도시 ‘라라랜드’에서 재즈 피아니스트 세바스찬(라이언 고슬링 분)과 배우 지망생 미아(엠마 스톤 분)가 만난다. 두 사람은 미완성이지만, 사랑과 희망, 그리고 열정으로 인생에서 가장 빛나는 순간인 무대를 만들어가기 시작한다.",
+        "showTm": "2시간 30분",
+        "directors":"봉준호",
+        "actors" : "에이, 비" ,
+        "watchGradeNm" :"15세 이상 관람가",
+        "genre" :"로맨스"
     },
     {
-        "poster": "http://www.kobis.or.kr/common/mast/movie/2016/11/thumb_x289/thn_9230ca1ac71c47f79510ed7d92a3f795.jpg",
-        "MovieNm": "라라랜드",
-        "year": "2022 | 한국",
-        "rating": "4.3",
-        "userid": "destiny",
+        "openYear": 2022,
+        "movieCd": 7,
+        "movieNm": "애프터 웨딩 인 뉴욕",
+        "openDt": "2022",
+        "nationNm": "한국",
+        "imageUrl": "http://www.kobis.or.kr/common/mast/movie/2020/04/thumb_x289/thn_a135f0c03510497a90ab6a0773dd901e.jpg",
+        "rate": "3",
+        "id": "destiny",
         "comment": "good~",
-        "rank" :7
-
-    },
-    {
-        "poster": "http://www.kobis.or.kr/common/mast/movie/2016/11/thumb_x289/thn_9230ca1ac71c47f79510ed7d92a3f795.jpg",
-        "MovieNm": "라라랜드",
-        "year": "2022 | 한국",
-        "rating": "4.3",
-        "userid": "destiny",
-        "comment": "good~",
-        "rank" :8
-
+        "story": "꿈을 꾸는 사람들을 위한 별들의 도시 ‘라라랜드’에서 재즈 피아니스트 세바스찬(라이언 고슬링 분)과 배우 지망생 미아(엠마 스톤 분)가 만난다. 두 사람은 미완성이지만, 사랑과 희망, 그리고 열정으로 인생에서 가장 빛나는 순간인 무대를 만들어가기 시작한다.",
+        "showTm": "2시간 30분",
+        "directors":"봉준호",
+        "actors" : "에이, 비" ,
+        "watchGradeNm" :"15세 이상 관람가",
+        "genre" :"로맨스"
     }
-    
+   
 ]

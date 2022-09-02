@@ -4,7 +4,31 @@ import Carousel from 'react-material-ui-carousel'
 import styled from 'styled-components';
 import Slider from "react-slick";
 import { FcSettings } from 'react-icons/fc';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import '../style/Main.css';
 
+function SampleNextArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background: "red" }}
+      onClick={onClick}
+    />
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background: "green" }}
+      onClick={onClick}
+    />
+  );
+}
 const MovieList = ({data,onOver}) => {
   
     
@@ -28,16 +52,19 @@ const MovieList = ({data,onOver}) => {
     
 };
 const settings = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4
+    slidesToShow: 5,
+    slidesToScroll: 4,
+    
+    // nextArrow: <SampleNextArrow />,
+    //   prevArrow: <SamplePrevArrow />
   };
   const StyledSlider = styled(Slider)`
   .slick-list {
     
-    margin: 0 auto;
+    margin: 0 0;
   }
 
   .slick-slide div {
@@ -46,6 +73,7 @@ const settings = {
 
   .slick-dots {
     bottom: -50px;
+
     margin-top: 200px;
   }
 

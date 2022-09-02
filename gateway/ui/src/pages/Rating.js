@@ -14,7 +14,7 @@ const Rating= () => {
     const [isShow,setIsShow] = useState(false)
 
     const onOver = (id) => {
-        const num = data.findIndex(item=>item.rank===id)
+        const num = data.findIndex(item=>item.movieCd===id)
         setMovieInfo(data[num])
         //setMovieInfo(data.find(item=>item.rank===id))   
         setIsShow(true)
@@ -57,15 +57,15 @@ const Rating= () => {
 };
 const RatingMovieItem = ({item,onOver}) => {
 
-    const {rank,poster,MovieNm, year} = item
+    const { imageUrl, movieNm, movieCd, openDt,nationNm, rate } = item
 
     return (
        
         <>
       
 
-        <li onClick={()=>onOver(rank)}>
-        <img className='poster_Box ' src={poster}  alt={MovieNm}/>
+        <li onClick={()=>onOver(movieCd)}>
+        <img className='poster_Box ' src={imageUrl}  alt={movieNm}/>
         <dl className='info_Box ' >
                   
                     

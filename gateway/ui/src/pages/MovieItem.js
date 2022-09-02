@@ -5,18 +5,18 @@ import "../style/Main.css";
 // MovieList.js에서 넘어온 item을 받아줌
 const MovieItem = ({item,onOver}) => {
 
-    const {rank,poster,MovieNm, year} = item
+    const { imageUrl, movieNm, movieCd, openDt,nationNm, rate } = item
 
     return (
        
         <>
       
 
-        <li className='movie_Box' onClick={()=>onOver(rank)}>
-        <img className='poster_Box ' src={poster}  alt={MovieNm}/>
+        <li className='movie_Box' onClick={()=>onOver(movieCd)}>
+        <img className='poster_Box ' src={imageUrl}  alt={movieNm}/>
         <dl className='info_Box ' >
-                    <h3 >{MovieNm}</h3>
-                    <h3>{year}</h3>
+                    <h3 >{movieNm}</h3>
+                    <h3>{openDt}</h3>
                     
 
                 </dl>

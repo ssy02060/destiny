@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.3",
     "@react-icons/all-files": "^4.1.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -15,6 +18,7 @@
     "react-horizontal-scrolling-menu": "^3.2.0",
     "react-icons": "^4.4.0",
     "react-material-ui-carousel": "^3.4.2",
+    "react-pure-modal": "^2.2.0",
     "react-rating-stars-component": "^2.2.0",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.3.0",
