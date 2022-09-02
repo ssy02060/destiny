@@ -7,10 +7,8 @@ app = Flask("Movie")
 
 PORT = os.environ['PORT']
 DB_PASSWORD = os.environ['DB_PASSWORD']
-reader_endpoint = 'destiny.cluster-ro-cvj4baspdxd6.ap-northeast-2.docdb.amazonaws.com'
-writer_endpoint  = 'destiny.cluster-cvj4baspdxd6.ap-northeast-2.docdb.amazonaws.com'
-# WRITER_ENDPOINT = os.environ['WRITER_ENDPOINT']
-# READER_ENDPOINT = os.environ['READER_ENDPOINT']
+WRITER_ENDPOINT = os.environ['WRITER_ENDPOINT']
+READER_ENDPOINT = os.environ['READER_ENDPOINT']
 
 
 # mydb = writer_client['movie_data']

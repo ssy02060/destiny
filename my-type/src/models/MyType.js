@@ -2,18 +2,13 @@ const mongoose = require('mongoose');
 
 // Define Schemes
 const mytypeSchema = new mongoose.Schema({
-  userId: {type: String, required : true, unique :true},
-  tag: { 
-    genres: {type: [String] },
-    directors: {type: [String]},
-    movies: {type: [String] },
-    actors: {type: [String] }
-  } ,
+  userId: { type: String, required: true, unique: true },
+  movies: { type: [String]},
 },
- {
-   timestamps: true
- },
- { collection : "My-collection-name2"}
+  { collection: "my-type" },
+  {
+    timestamps: true
+  }
 );
 
 
@@ -52,6 +47,6 @@ mytypeSchema.statics.deleteByuserId = function (userId) {
 };
 
 // Create Model & Export
-module.exports = mongoose.model('new', mytypeSchema);
+module.exports = mongoose.model('my-type', mytypeSchema);
 
 

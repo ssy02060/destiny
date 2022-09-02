@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
   MyType.findAll()
     .then((mytypes) => {
       if (!mytypes.length) return res.status(404).send({ err: 'mytype not found' });
-      res.status(200).send(`${mytypes}`);
+      res.status(200).jsonp(mytypes);
     })
     .catch(err => res.status(500).send(err));
 });
@@ -17,7 +17,7 @@ router.get('/:userId', (req, res) => {
   MyType.findOneByuserId(req.params.userId)
     .then((mytype) => {
       if (!mytype) return res.status(404).send({ err: 'mytype not found' });
-      res.status(200).send(`${mytype}`);
+      res.status(200).jsonp(mytype);
     })
     .catch(err => res.status(500).send(err));
 });
@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
   console.log(req.body)
   console.log("-------------------")
   MyType.create(req.body)
-    .then(mytype => res.status(200).send(mytype))
+    .then(mytype => res.status(200).jsonp(mytype))
     .catch(err => res.status(500).send(err));
 });
 
@@ -36,9 +36,9 @@ router.post('/', (req, res) => {
 router.put('/:userId', (req, res) => {
   console.log(req.body.userId)
   MyType.updateByuserId(req.params.userId, req.body)
-    .then(mytype => res.status(200).send(mytype))
+    .then(mytype => res.status(200).jsonp(mytype))
     .catch(err => res.status(500).send(err));
-    //.catch(err =>  console.log(err))
+  //.catch(err =>  console.log(err))
 });
 
 //Update by mongodb document
