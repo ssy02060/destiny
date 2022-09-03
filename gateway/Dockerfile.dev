@@ -7,4 +7,4 @@ COPY ./public ./public
 
 CMD npm config set cache-min 9999999 && \
     npm install && \
-    npm run start:dev
+    npm run start
