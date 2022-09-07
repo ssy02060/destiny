@@ -72,7 +72,7 @@ const Modal = ({ onClose, movieInfo }) => {
                         <h1>관람등급 : {watchGradeNm}</h1>
                         <HorizonLine/>
                         <h2>비슷한 작품</h2>
-                        
+                        <img  src={imageUrl} alt={movieNm} />
                         </Info>
                         
 
@@ -124,11 +124,12 @@ const Overlay = styled.div`
   right: 0;
   background: rgba(0, 0, 0, 0.2);
   z-index: 9999;
+  overflow-y : scroll;
 `;
 
 const ModalWrap = styled.div`
   width: 600px;
-  height: fit-content;
+  height: 70%;
   border-radius: 0px;
   background-color: #fff;
   position: absolute;
@@ -136,6 +137,7 @@ const ModalWrap = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   max-height: 100%;
+  overflow-y : scroll;
  
 `;
 

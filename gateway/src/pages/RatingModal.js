@@ -3,6 +3,8 @@ import React ,{ useEffect, useState,useRef, Component  }from 'react';
 import {AiOutlineCloseCircle} from "react-icons/ai";
 import styled from "styled-components";
 import ReactStars from "react-rating-stars-component";
+import { style } from '@mui/system';
+import "../style/Modal.css"
 function useOutSideClick(ref, callback) {
     useEffect(() => {
       const handleClick = (event) => {
@@ -66,10 +68,10 @@ const Rating_Modal = ({onClose,movieInfo}) => {
     activeColor="#ffd700"
   />
          
+         <div className='rating_modal_input'>
          
-         
-         <input id="comment" name= "comment" placeholder="comment" type="text"   onChange={oncommentHandler}></input>
-        
+         <input  id="comment" name= "comment" placeholder="comment" type="text"   onChange={oncommentHandler}></input>
+         </div>
            <Button onClick={handleClose}>저장</Button>
          </Contents>
        </ModalWrap>
@@ -90,6 +92,13 @@ const Rating_Modal = ({onClose,movieInfo}) => {
         </div>
     );
 };
+
+const input = styled.div `
+width: 50px;
+  height: 100%;
+
+`
+
 const Overlay = styled.div`
   position: fixed;
   width: 100%;
@@ -103,7 +112,7 @@ const Overlay = styled.div`
 `;
 
 const ModalWrap = styled.div`
-  width: 300px;
+  width: 340px;
   height: fit-content;
   border-radius: 15px;
   background-color: #fff;
@@ -141,6 +150,7 @@ const Button = styled.button`
   font-size: 14px;
   padding: 10px 20px;
   border: none;
+  margin-top:15px;
   background-color: #ababab;
   border-radius: 10px;
   color: white;

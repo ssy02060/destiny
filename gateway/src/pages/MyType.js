@@ -61,11 +61,11 @@ const MyType = () => {
       if (isChecked) { //체크 되었을때
         checkedItems.add(movieCd); //체크시 삽입
         setCheckedItems(checkedItems); //체크 요소 넣어주기
-        box.style.backgroundColor = "#F6CB44"; //스타일 변경
+      box.style.backgroundColor = "black"; //스타일 변경
       } else if (!isChecked && checkedItems.has(movieCd)) { //체크가 안되었고, id가 있을때(클릭 2번시)
         checkedItems.delete(movieCd); //체크 두번시 삭제
         setCheckedItems(checkedItems);
-        box.style.backgroundColor = "#fff";
+       // box.style.backgroundColor = "#fff";
       }
       
 
@@ -74,6 +74,7 @@ const MyType = () => {
     console.log(checkedItems)
     return (
       <div>
+        
       <div className='Type_header'>
 
           <h1 className='Type_logo'>DESTINY</h1>
@@ -87,10 +88,11 @@ const MyType = () => {
       <div className='Type_layout'>
       
       {data.map(data => 
-                   
-                   <label key={data.movieCd}><input type="checkbox"  value={data.movieNm} onChange={(e)=>checkHandler(e)} />
+                   <li>
+                   <input type="checkbox"  id = {data.movieNm} value={data.movieNm} onChange={(e)=>checkHandler(e)} />
+                   <label key={data.movieCd} for = {data.movieNm}>
                    <img className='poster_Box '  src={data.imageUrl}  alt={data.movieNm}/></label>
-                 
+                   </li>
                
 
             )}
