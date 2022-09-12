@@ -117,6 +117,23 @@
         "actors" : "에이, 비" ,
         "watchGradeNm" :"15세 이상 관람가",
         "genre" :"로맨스"
+    },
+    {
+        "openYear": 2022,
+        "movieCd": 10,
+        "movieNm": "라라랜드",
+        "openDt": "2022",
+        "nationNm": "한국",
+        "imageUrl": "http://www.kobis.or.kr/common/mast/movie/2016/11/thumb_x289/thn_9230ca1ac71c47f79510ed7d92a3f795.jpg",
+        "rate": "1",
+        "id": "destiny",
+        "comment": "good~",
+        "story": "꿈을 꾸는 사람들을 위한 별들의 도시 ‘라라랜드’에서 재즈 피아니스트 세바스찬(라이언 고슬링 분)과 배우 지망생 미아(엠마 스톤 분)가 만난다. 두 사람은 미완성이지만, 사랑과 희망, 그리고 열정으로 인생에서 가장 빛나는 순간인 무대를 만들어가기 시작한다.",
+        "showTm": "2시간 30분",
+        "directors":"봉준호",
+        "actors" : "에이, 비" ,
+        "watchGradeNm" :"15세 이상 관람가",
+        "genre" :"로맨스"
     }
    
 ]

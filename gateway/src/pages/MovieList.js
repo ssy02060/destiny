@@ -33,7 +33,7 @@ const MovieList = ({data,onOver}) => {
   
     
     return (
-        <><StyledSlider {...settings} className='movie_List_Box'>
+        <><StyledSlider {...settings} >
         
             
                     {/* Movies.js에서 받은 데이터를 map으로 반복문 돌림 */}
@@ -62,6 +62,7 @@ const settings = {
     //   prevArrow: <SamplePrevArrow />
   };
   const StyledSlider = styled(Slider)`
+  width: 1300px;
   .slick-list {
     
     margin: 0 0;
@@ -72,13 +73,17 @@ const settings = {
   }
 
   .slick-dots {
-    bottom: -50px;
+    bottom: -100px;
 
-    margin-top: 200px;
+    margin-top: 0px;
   }
 
   .slick-track {
     /* overflow-x: hidden; */
   }
+  
 `;
+
+
+  
 export default MovieList;

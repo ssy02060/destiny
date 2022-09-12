@@ -65,12 +65,8 @@ const RatingMovieItem = ({item,onOver}) => {
       
 
         <li onClick={()=>onOver(movieCd)}>
-        <img className='poster_Box ' src={imageUrl}  alt={movieNm}/>
-        <dl className='info_Box ' >
-                  
-                    
-
-                </dl>
+        <img className='rating_poster_Box ' src={imageUrl}  alt={movieNm}/>
+        
 
             
         </li>
