@@ -10,9 +10,11 @@ import requests
 
 app = Flask("review")
 PORT = os.environ['PORT']
-DBHOST = os.environ['DBHOST']
+DB_PASSWORD = os.environ['DB_PASSWORD']
+reader_endpoint = os.environ['READER_ENDPOINT']
+writer_endpoint  = os.environ['WRITER_ENDPOINT']
 
-client = MongoClient(host=DBHOST, port=27017)
+client = MongoClient('mongodb://root:'+ DB_PASSWORD + '@' + writer_endpoint + ':27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false', maxPoolSize=200)
 db = client['Destiny']
 reviews = db.reviews
 
