@@ -7,8 +7,8 @@ app = Flask("Movie")
 
 PORT = os.environ['PORT']
 DB_PASSWORD = os.environ['DB_PASSWORD']
-WRITER_ENDPOINT = os.environ['WRITER_ENDPOINT']
-READER_ENDPOINT = os.environ['READER_ENDPOINT']
+writer_endpoint = os.environ['WRITER_ENDPOINT']
+reader_endpoint = os.environ['READER_ENDPOINT']
 
 
 # mydb = writer_client['movie_data']
