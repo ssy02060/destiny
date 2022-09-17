@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 
 // Find One by userId
 router.get('/:userId', (req, res) => {
-  console.log(req.params.ususerIderid)
+  console.log(req.params.userId)
   MyType.findOneByuserId(req.params.userId)
     .then((mytype) => {
       if (!mytype) return res.status(404).send({ err: 'mytype not found' });

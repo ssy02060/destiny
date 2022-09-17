@@ -34,7 +34,7 @@ const SignUp = () => {
 	const checkPassword = (confirmPw, pw) => {
 		const element = document.getElementById('confirmText');
 
-		if (confirmPw != pw) {
+		if (confirmPw !== pw) {
 			element.style.color = 'red';
 			setConfirmText("비밀번호가 일치하지 않습니다.");
 		}
@@ -59,13 +59,13 @@ const SignUp = () => {
 		}
 	}
 
-	const onSignUp = () => {
+	const onConfirm = () => {
 		if (confirmPassword != password) {
 			alert('비밀번호가 일치하지 않습니다.')
 		}
-		axios.post('http://3.37.28.1:4001/account/verify', {
-			email: "ssy02060@gmail.com",
-			code: "747842"
+		axios.post('http://3.37.28.1:4001/account/varify', {
+			email: email,
+			password: password
 		})
 			.then(function (response) {
 				console.log(response);
@@ -91,26 +91,11 @@ const SignUp = () => {
 							<input id="id" name="id" placeholder="Email" type="text" onChange={onEmailHandler}></input>
 						</div>
 						<div class="login-input-wrap password-wrap">
-
-							<input id="password"
-								name="password" placeholder="Password" type="password" onChange={onPasswordHandler}></input>
-						</div>
-						<div class="login-input-wrap password-wrap">
-
-							<input id="confirmPassword"
-								name="confirmPassword" placeholder="Confirm Password" type="password" onChange={onConfirmPasswordHandler} ></input>
-
-						</div>
-						<div class="login-input-wrap password-wrap">
 							<input id="confirmCode" name="confirmCode" placeholder="Confirm Code" type="text" onChange={onConfirmCodeHandler}></input>
 						</div>
-						<h1 id='validEmailText' className='confirm_text' >{validEmailText}</h1>
-						<h1 id='confirmText' className='confirm_text' >{confirmText}</h1>
-						<div>
-							<Link to="/confirm">
-								<button type='submit' onClick={onSignUp} >Sign Up</button>
-							</Link>
 
+						<div>
+							<button type='submit' onClick={onConfirm} >Sign Up</button>
 						</div>
 
 					</section>

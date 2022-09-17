@@ -4,6 +4,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 // const path = require("path")
 // const http = require("http")
 // const { connect } = require('http2');
@@ -28,7 +29,9 @@ mongoose.connect(DB_HOST)
   .then(() => console.log('Successfully connected to mongodb'))
   .catch(e => console.error(e));
 
+
 // ROUTERS
+app.use(cors())
 app.use('/mytype', require('./routes/MyTypes'));
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
