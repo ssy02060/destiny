@@ -17,7 +17,7 @@ function Header() {
         <div className='header'>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <Link to="/" style={{ position: 'fixed', top: '0px', left: '100px', display: 'flex', textDecoration: "none" }}>
-                <font color="FFDF65" size='5.5'><h1>데스티니</h1></font>
+                <font color="FFDF65" size='5.5'><h1>Destiny</h1></font>
 
             </Link>
             <body >
